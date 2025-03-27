@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trash Can Journal</title>
+    <style>
+        @font-face {
+            font-family: 'W95FA';
+            src: url('W95FA.woff2') format('woff2'),
+                 url('W95FA.woff') format('woff'),
+                 url('W95FA.ttf') format('truetype'),
+                 url('W95FA.otf') format('opentype');
+        }
+
+        body {
+            margin: 0;
+            font-family: 'W95FA', sans-serif;
+            color: black;
+            -webkit-text-stroke: bold;
+            cursor: none;
+        }
+
+        .landing-page {
+            background-color: pink;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .trashcan-logo {
+            width: 150px;
+            height: auto;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        .cursor-image {
+            position: absolute;
+            width: 300px; /* Smaller size for smoother appearance */
+            height: auto;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+        }
+
+        @import url('https://fonts.cdnfonts.com/css/w95fa');
+    </style>
+</head>
+<body>
+    <!-- Landing Page -->
+    <div class="landing-page">
+        <img src="assets/logo.png" alt="Trash Can Journal" class="trashcan-logo" onclick="location.href='pages/trashcan.html'">
+        <img src="assets/translogo.png" alt="Trash Can Logo" style="width: 300px; height: auto;" class="trashcan-logo" onclick="location.href='pages/trashcan.html'">
+    </div>
+
+    <script>
+        let currentIndex = 0;
+        const images = [
+            'assets/t61.png',
+            'assets/t62.png',
+            'assets/t3.png',
+            'assets/t4.png',
+            'assets/t5.png',
+            'assets/t6.png', 'assets/t7.png', 'assets/t68.png', 'assets/t9.png', 'assets/t10.png',
+            'assets/t11.png', 'assets/t12.png', 'assets/t63.png', 'assets/t14.png', 'assets/t15.png',
+            'assets/t16.png', 'assets/t23.png', 'assets/t24.png', 'assets/t25.png',
+            'assets/t26.png', 'assets/t27.png', 'assets/t28.png', 'assets/t29.png', 'assets/t34.png', 'assets/t35.png', 'assets/t38.png', 'assets/t39.png', 'assets/t40.png',
+            'assets/t41.png', 'assets/t42.png', 'assets/t43.png', 'assets/t44.png', 'assets/t45.png',
+            'assets/t46.png', 'assets/t48.png', 'assets/t49.png', 'assets/t50.png', 'assets/t51.png', 'assets/t52.png', 'assets/t53.png'
+        ];
+
+        let lastMoveTime = 0; // Store the timestamp of the last image creation
+        const delay = 200; // Delay in milliseconds between image creation
+
+        document.addEventListener('mousemove', function(event) {
+            const currentTime = Date.now();
+            
+            // Only create a new image if enough time has passed
+            if (currentTime - lastMoveTime >= delay) {
+                lastMoveTime = currentTime;
+
+                // Create a new image element
+                const img = document.createElement('img');
+                const randomIndex = Math.floor(Math.random() * images.length);
+                img.src = images[currentIndex];
+                    currentIndex = (currentIndex + 1) % images.length;
+
+                img.classList.add('cursor-image');
+                img.style.left = `${event.pageX}px`;
+                img.style.top = `${event.pageY}px`;
+
+                 const rotation = Math.random() < 0.5 ? (Math.random() * 15 - 10) : (Math.random() * 15 + 10); // Random rotation between -10 to 10 degrees
+                img.style.transform += ` rotate(${rotation}deg)`; // Apply rotation to the image
+
+
+                document.body.appendChild(img);
+            }
+        });
+    </script>
+</body>
+</html>
