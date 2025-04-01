@@ -43,8 +43,13 @@
             font-weight: bold;
             color: white;
             text-align: center;
-            transition: all 0.5s ease;
+            transition: top 2s ease-in;
             opacity: 0.9;
+        }
+
+        .falling-item img {
+            width: 100px; /* Adjust image size */
+            height: 100px;
         }
     </style>
 </head>
@@ -58,13 +63,13 @@
         // Define the total number of items (18 images and 18 pieces of text)
         const totalItems = 18;
 
-        // Helper function to create falling images
+        // Helper function to create falling images and text
         function createFallingItem(index, isText) {
             const item = document.createElement('div');
             item.classList.add('falling-item');
             item.style.left = `${Math.random() * window.innerWidth}px`; // Random horizontal position
             item.style.top = `-50px`; // Start above the screen
-            item.style.transition = 'top 2s ease-in';
+            item.style.transition = 'top 3s ease-in'; // Slower fall for better effect
 
             if (isText) {
                 // Create text items
@@ -73,8 +78,6 @@
                 // Create image items
                 const img = document.createElement('img');
                 img.src = `assets/t${index + 1}.png`;
-                img.style.width = '100px';
-                img.style.height = '100px';
                 item.appendChild(img);
             }
 
@@ -88,7 +91,8 @@
             // Stack the items once they hit the ground
             item.addEventListener('transitionend', () => {
                 const currentTop = parseFloat(item.style.top);
-                item.style.top = `${Math.min(window.innerHeight - 150, currentTop)}px`; // Prevent falling out of screen
+                // Ensure the item stays within the window bounds
+                item.style.top = `${Math.min(window.innerHeight - 150, currentTop)}px`;
             });
         }
 
