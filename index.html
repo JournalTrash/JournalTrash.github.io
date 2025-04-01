@@ -21,7 +21,7 @@
         .translogo {
             width: 220px;
             position: absolute;
-            top: 80%;
+            top: -20px;
             left: 50%;
             transform: translateX(-50%);
             opacity: 0.8;
@@ -38,7 +38,7 @@
         <img src="assets/logo.png" alt="Logo" class="logo">
     </div>
     <script>
-        const { Engine, Render, World, Bodies, Mouse, MouseConstraint } = Matter;
+        const { Engine, Render, World, Bodies, Mouse, MouseConstraint, Events } = Matter;
 
         const engine = Engine.create();
         const render = Render.create({
@@ -52,11 +52,16 @@
         const totalItems = 18;
         let stackY = window.innerHeight - 50;
 
+        const ground = Bodies.rectangle(window.innerWidth / 2, window.innerHeight - 25, window.innerWidth, 50, {
+            isStatic: true,
+            render: { visible: false }
+        });
+        World.add(world, ground);
+
         for (let i = 1; i <= totalItems; i++) {
             let xPos = Math.random() * (window.innerWidth - 150) + 75;
             let yPos = Math.random() * -800;
             
-            // Image bodies
             const imageTexture = `assets/t${i}.png`;
             const imageBody = Bodies.rectangle(xPos, yPos, 150, 150, {
                 restitution: 0.2,
@@ -65,7 +70,6 @@
                 render: { sprite: { texture: imageTexture, xScale: 1, yScale: 1 } }
             });
             
-            // Text bodies positioned just above the image
             const textBody = Bodies.rectangle(xPos, yPos - 90, 150, 40, {
                 restitution: 0.2,
                 friction: 0.5,
@@ -73,34 +77,19 @@
                 render: { fillStyle: "white" }
             });
             
-            // Ensure proper stacking when they land
-            Matter.Events.on(engine, "collisionStart", function(event) {
-                event.pairs.forEach(pair => {
-                    if (pair.bodyA === imageBody || pair.bodyB === imageBody) {
-                        Matter.Body.setStatic(imageBody, true);
-                        Matter.Body.setStatic(textBody, true);
-                        stackY -= 160;
-                    }
-                });
-            });
-
             World.add(world, [imageBody, textBody]);
             items.push(imageBody, textBody);
         }
 
-        // Ground for stacking effect
-        const ground = Bodies.rectangle(window.innerWidth / 2, window.innerHeight, window.innerWidth, 50, {
-            isStatic: true,
-            render: { fillStyle: 'transparent' }
+        Events.on(engine, "collisionStart", function(event) {
+            event.pairs.forEach(pair => {
+                if ((pair.bodyA === ground && items.includes(pair.bodyB)) || (pair.bodyB === ground && items.includes(pair.bodyA))) {
+                    Matter.Body.setStatic(pair.bodyA, true);
+                    Matter.Body.setStatic(pair.bodyB, true);
+                }
+            });
         });
-        World.add(world, ground);
 
-        // Side walls to keep images from going off-screen
-        const leftWall = Bodies.rectangle(-10, window.innerHeight / 2, 20, window.innerHeight, { isStatic: true, render: { visible: false } });
-        const rightWall = Bodies.rectangle(window.innerWidth + 10, window.innerHeight / 2, 20, window.innerHeight, { isStatic: true, render: { visible: false } });
-        World.add(world, [leftWall, rightWall]);
-
-        // Mouse interaction for dragging images
         const mouse = Mouse.create(render.canvas);
         const mouseConstraint = MouseConstraint.create(engine, {
             mouse: mouse,
