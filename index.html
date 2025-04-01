@@ -29,17 +29,6 @@
             width: 200px; /* Slightly bigger */
             opacity: 0.8;
         }
-        
-        /* Style for falling text */
-        .falling-text {
-            position: absolute;
-            font-size: 20px;
-            font-weight: bold;
-            color: white;
-            text-align: center;
-            transition: all 0.5s ease;
-            opacity: 0.9;
-        }
     </style>
 </head>
 <body>
@@ -63,24 +52,12 @@
         // Add images as falling bodies
         const items = [];
         const totalImages = 18;
-        const texts = []; // Array to hold text elements
         for (let i = 1; i <= totalImages; i++) {
-            // Add falling images
-            const img = Bodies.rectangle(Math.random() * window.innerWidth, 50, 100, 100, {
-                restitution: 0.3,
-                friction: 0.9,
+            items.push(Bodies.rectangle(Math.random() * window.innerWidth, 50, 100, 100, {
+                restitution: 0.5, // Add bounce effect
+                friction: 0.5,
                 render: { sprite: { texture: `assets/t${i}.png`, xScale: 0.5, yScale: 0.5 } }
-            });
-            items.push(img);
-
-            // Create a text element for each image
-            const text = document.createElement('div');
-            text.classList.add('falling-text');
-            text.innerText = `Article ${i}`; // You can customize the text here
-            text.style.left = `${Math.random() * window.innerWidth}px`; // Random position for each text
-            text.style.top = `${-100}px`; // Start position above the screen
-            document.body.appendChild(text);
-            texts.push(text);
+            }));
         }
         World.add(world, items);
 
@@ -107,17 +84,6 @@
 
         // Prevent scrolling on mobile
         document.body.addEventListener('touchmove', (e) => e.preventDefault(), { passive: false });
-
-        // Update text positions based on falling bodies
-        Matter.Events.on(engine, 'afterUpdate', () => {
-            items.forEach((item, index) => {
-                const text = texts[index];
-                // Set text position to follow the image
-                const pos = item.position;
-                text.style.top = `${pos.y - 50}px`; // Adjust vertical position
-                text.style.left = `${pos.x - 50}px`; // Adjust horizontal position
-            });
-        });
 
         // Run the engine
         Engine.run(engine);
