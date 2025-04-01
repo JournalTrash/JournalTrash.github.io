@@ -54,24 +54,24 @@
 
         for (let i = 1; i <= totalItems; i++) {
             let xPos = Math.random() * window.innerWidth * 0.8 + 50;
-            let yPos = Math.random() * -500;
+            let yPos = Math.random() * -800; // Start higher for a better fall effect
             
             // Image bodies
             const imageTexture = `assets/t${i}.png`;
             const imageBody = Bodies.rectangle(xPos, yPos, 120, 120, {
-                restitution: 0.6,
-                friction: 0.5,
+                restitution: 0.4,
+                friction: 0.8,
+                density: 0.02,
                 render: { sprite: { texture: imageTexture, xScale: 0.8, yScale: 0.8 } }
             });
             
-            // Text bodies (as separate floating elements)
+            // Text bodies (stacking separately above the images)
             const textBody = Bodies.rectangle(xPos, yPos - 50, 100, 30, {
                 isStatic: false,
-                render: {
-                    sprite: {
-                        texture: "assets/text-bg.png"
-                    }
-                }
+                restitution: 0.4,
+                friction: 0.8,
+                density: 0.01,
+                render: { sprite: { texture: "assets/text-bg.png" } }
             });
             
             World.add(world, [imageBody, textBody]);
@@ -79,15 +79,15 @@
         }
 
         // Ground for stacking effect
-        const ground = Bodies.rectangle(window.innerWidth / 2, window.innerHeight - 50, window.innerWidth, 40, {
+        const ground = Bodies.rectangle(window.innerWidth / 2, window.innerHeight - 30, window.innerWidth, 60, {
             isStatic: true,
-            render: { fillStyle: 'black' }
+            render: { fillStyle: 'transparent' }
         });
         World.add(world, ground);
 
         // Side walls to keep images from going off-screen
-        const leftWall = Bodies.rectangle(-10, window.innerHeight / 2, 20, window.innerHeight, { isStatic: true });
-        const rightWall = Bodies.rectangle(window.innerWidth + 10, window.innerHeight / 2, 20, window.innerHeight, { isStatic: true });
+        const leftWall = Bodies.rectangle(-10, window.innerHeight / 2, 20, window.innerHeight, { isStatic: true, render: { visible: false } });
+        const rightWall = Bodies.rectangle(window.innerWidth + 10, window.innerHeight / 2, 20, window.innerHeight, { isStatic: true, render: { visible: false } });
         World.add(world, [leftWall, rightWall]);
 
         // Mouse interaction for dragging images
