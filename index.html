@@ -19,15 +19,15 @@
             text-align: center;
         }
         .translogo {
-            width: 200px;
+            width: 220px;
             position: absolute;
-            top: -15px;
+            top: -20px;
             left: 50%;
             transform: translateX(-50%);
             opacity: 0.8;
         }
         .logo {
-            width: 150px;
+            width: 180px;
             position: relative;
         }
     </style>
@@ -48,28 +48,26 @@
         });
 
         const world = engine.world;
-
         const items = [];
         const totalItems = 18;
 
         for (let i = 1; i <= totalItems; i++) {
-            let xPos = Math.random() * window.innerWidth * 0.8 + 50;
+            let xPos = Math.random() * (window.innerWidth - 100) + 50;
             let yPos = Math.random() * -800; // Start higher for a better fall effect
             
             // Image bodies
             const imageTexture = `assets/t${i}.png`;
             const imageBody = Bodies.rectangle(xPos, yPos, 120, 120, {
-                restitution: 0.4,
-                friction: 0.8,
+                restitution: 0.6,
+                friction: 0.5,
                 density: 0.02,
-                render: { sprite: { texture: imageTexture, xScale: 0.8, yScale: 0.8 } }
+                render: { sprite: { texture: imageTexture, xScale: 1, yScale: 1 } }
             });
             
-            // Text bodies (stacking separately above the images)
-            const textBody = Bodies.rectangle(xPos, yPos - 50, 100, 30, {
-                isStatic: false,
-                restitution: 0.4,
-                friction: 0.8,
+            // Text bodies positioned just above the image
+            const textBody = Bodies.rectangle(xPos, yPos - 80, 100, 40, {
+                restitution: 0.6,
+                friction: 0.5,
                 density: 0.01,
                 render: { sprite: { texture: "assets/text-bg.png" } }
             });
@@ -79,7 +77,7 @@
         }
 
         // Ground for stacking effect
-        const ground = Bodies.rectangle(window.innerWidth / 2, window.innerHeight - 30, window.innerWidth, 60, {
+        const ground = Bodies.rectangle(window.innerWidth / 2, window.innerHeight - 10, window.innerWidth, 20, {
             isStatic: true,
             render: { fillStyle: 'transparent' }
         });
