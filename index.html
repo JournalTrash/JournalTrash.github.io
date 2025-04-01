@@ -43,8 +43,8 @@
             font-weight: bold;
             color: white;
             text-align: center;
-            transition: top 2s ease-in;
             opacity: 0.9;
+            transition: all 2s ease-in;
         }
 
         .falling-item img {
@@ -60,16 +60,16 @@
     </div>
 
     <script>
-        // Define the total number of items (18 images and 18 pieces of text)
+        // Total number of items (18 images and 18 pieces of text)
         const totalItems = 18;
-
+        
         // Helper function to create falling images and text
         function createFallingItem(index, isText) {
             const item = document.createElement('div');
             item.classList.add('falling-item');
             item.style.left = `${Math.random() * window.innerWidth}px`; // Random horizontal position
             item.style.top = `-50px`; // Start above the screen
-            item.style.transition = 'top 3s ease-in'; // Slower fall for better effect
+            item.style.transition = 'top 2s ease'; // Smooth fall transition
 
             if (isText) {
                 // Create text items
@@ -85,15 +85,22 @@
 
             // Start the falling animation after the item is created
             setTimeout(() => {
+                // Set the fall height and start animation
                 item.style.top = `${Math.random() * (window.innerHeight - 150)}px`; // Random fall height
-            }, 50); // Delay to start the fall
+            }, 100); // Slight delay to prevent jumpiness
 
             // Stack the items once they hit the ground
             item.addEventListener('transitionend', () => {
                 const currentTop = parseFloat(item.style.top);
-                // Ensure the item stays within the window bounds
-                item.style.top = `${Math.min(window.innerHeight - 150, currentTop)}px`;
+                const stackHeight = getStackHeight(currentTop);
+                item.style.top = `${stackHeight}px`; // Stack on top of each other
             });
+        }
+
+        // Function to calculate stack height to avoid overlap
+        function getStackHeight(currentTop) {
+            const margin = 10; // Distance between stacked items
+            return currentTop + margin;
         }
 
         // Create all falling images and text
