@@ -4,10 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Journal. Trash</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
     <style>
-        body { margin: 0; overflow: hidden; background: pink; touch-action: none; position: relative; }
-        canvas { display: block; }
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: pink;
+            touch-action: none;
+            position: relative;
+        }
 
         /* Centered fixed logos */
         .logo-container {
@@ -21,17 +25,19 @@
             flex-direction: column;
             align-items: center;
         }
+
         .logo {
             width: 150px; /* Adjust as needed */
             margin-bottom: 10px; /* Space between the logos */
         }
+
         .translogo {
             width: 200px; /* Slightly bigger */
             opacity: 0.8;
         }
 
-        /* Style for falling text */
-        .falling-text {
+        /* Falling elements (images and text) */
+        .falling-item {
             position: absolute;
             font-size: 20px;
             font-weight: bold;
@@ -47,76 +53,50 @@
         <img src="assets/logo.png" alt="Logo" class="logo">
         <img src="assets/translogo.png" alt="Transparent Logo" class="translogo">
     </div>
+
     <script>
-        const { Engine, Render, World, Bodies, Mouse, MouseConstraint, Composite } = Matter;
-
-        // Create engine and renderer
-        const engine = Engine.create();
-        const render = Render.create({
-            element: document.body,
-            engine: engine,
-            options: { width: window.innerWidth, height: window.innerHeight, wireframes: false, background: 'pink' }
-        });
-
-        const world = engine.world;
-
-        // Add images and text as falling bodies
-        const items = [];
+        // Define the total number of items (18 images and 18 pieces of text)
         const totalItems = 18;
 
-        for (let i = 1; i <= totalItems; i++) {
-            // Add falling images
-            const img = Bodies.rectangle(Math.random() * window.innerWidth, 50, 100, 100, {
-                restitution: 0.5,
-                friction: 0.9,
-                render: { sprite: { texture: `assets/t${i}.png`, xScale: 0.5, yScale: 0.5 } }
-            });
-            items.push(img);
+        // Helper function to create falling images
+        function createFallingItem(index, isText) {
+            const item = document.createElement('div');
+            item.classList.add('falling-item');
+            item.style.left = `${Math.random() * window.innerWidth}px`; // Random horizontal position
+            item.style.top = `-50px`; // Start above the screen
+            item.style.transition = 'top 2s ease-in';
 
-            // Add falling text (as a simple rectangle for now)
-            const text = Bodies.rectangle(Math.random() * window.innerWidth, -50, 150, 30, {
-                restitution: 0.5,
-                render: { fillStyle: 'white' }
+            if (isText) {
+                // Create text items
+                item.innerText = `Article ${index + 1}`;
+            } else {
+                // Create image items
+                const img = document.createElement('img');
+                img.src = `assets/t${index + 1}.png`;
+                img.style.width = '100px';
+                img.style.height = '100px';
+                item.appendChild(img);
+            }
+
+            document.body.appendChild(item);
+
+            // Start the falling animation after the item is created
+            setTimeout(() => {
+                item.style.top = `${Math.random() * (window.innerHeight - 150)}px`; // Random fall height
+            }, 50); // Delay to start the fall
+
+            // Stack the items once they hit the ground
+            item.addEventListener('transitionend', () => {
+                const currentTop = parseFloat(item.style.top);
+                item.style.top = `${Math.min(window.innerHeight - 150, currentTop)}px`; // Prevent falling out of screen
             });
-            items.push(text);
         }
-        World.add(world, items);
 
-        // Add static ground for stacking
-        const ground = Bodies.rectangle(window.innerWidth / 2, window.innerHeight - 10, window.innerWidth, 20, { 
-            isStatic: true,
-            render: { fillStyle: 'black' }
-        });
-        World.add(world, ground);
-
-        // Add side walls to keep images contained
-        const leftWall = Bodies.rectangle(-10, window.innerHeight / 2, 20, window.innerHeight, { isStatic: true });
-        const rightWall = Bodies.rectangle(window.innerWidth + 10, window.innerHeight / 2, 20, window.innerHeight, { isStatic: true });
-        World.add(world, [leftWall, rightWall]);
-
-        // Add mouse and touch interaction
-        const mouse = Mouse.create(render.canvas);
-        const mouseConstraint = MouseConstraint.create(engine, {
-            mouse: mouse,
-            constraint: { stiffness: 0.2, render: { visible: false } }
-        });
-        World.add(world, mouseConstraint);
-        render.mouse = mouse;
-
-        // Prevent scrolling on mobile
-        document.body.addEventListener('touchmove', (e) => e.preventDefault(), { passive: false });
-
-        // Update text and image positions based on physics
-        Matter.Events.on(engine, 'afterUpdate', () => {
-            items.forEach((item) => {
-                const pos = item.position;
-                item.position.y = Math.max(pos.y, window.innerHeight - 50); // Prevent going below ground
-            });
-        });
-
-        // Run the engine
-        Engine.run(engine);
-        Render.run(render);
+        // Create all falling images and text
+        for (let i = 0; i < totalItems; i++) {
+            createFallingItem(i, false); // false for images
+            createFallingItem(i, true);  // true for text
+        }
     </script>
 </body>
 </html>
