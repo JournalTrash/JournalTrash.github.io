@@ -9,20 +9,34 @@
         body { margin: 0; overflow: hidden; background: pink; touch-action: none; position: relative; }
         canvas { display: block; }
         
-        /* Centered fixed logo */
-        .logo {
+        /* Centered fixed logos */
+        .logo-container {
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             z-index: 10;
+            text-align: center;
+        }
+        .logo {
             width: 150px; /* Adjust as needed */
+            position: relative;
+        }
+        .translogo {
+            width: 180px; /* Slightly bigger */
+            position: absolute;
+            top: 10px; /* Adjust to make it appear under */
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0.8;
         }
     </style>
 </head>
 <body>
-    <img src="assets/logo.png" alt="Logo" class="logo">
-    <img src="assets/translogo.png" alt="Logo" class="logo">
+    <div class="logo-container">
+        <img src="assets/translogo.png" alt="Transparent Logo" class="translogo">
+        <img src="assets/logo.png" alt="Logo" class="logo">
+    </div>
     <script>
         const { Engine, Render, World, Bodies, Mouse, MouseConstraint } = Matter;
 
@@ -36,23 +50,29 @@
 
         const world = engine.world;
 
-        // Add images and text elements as falling bodies
+        // Add images as falling bodies
         const items = [];
-        const texts = ['Article 1', 'Article 2', 'Contact', 'Blog'];
-        for (let i = 1; i <= 4; i++) {
-            items.push(Bodies.rectangle(Math.random() * window.innerWidth, 50, 100, 50, {
+        const totalImages = 18;
+        for (let i = 1; i <= totalImages; i++) {
+            items.push(Bodies.rectangle(Math.random() * window.innerWidth, 50, 100, 100, {
+                restitution: 0.5, // Add bounce effect
+                friction: 0.5,
                 render: { sprite: { texture: `t${i}.png`, xScale: 0.5, yScale: 0.5 } }
-            }));
-            items.push(Bodies.rectangle(Math.random() * window.innerWidth, 50, 100, 50, {
-                render: { fillStyle: 'black' },
-                label: texts[i - 1]
             }));
         }
         World.add(world, items);
 
-        // Add ground
-        const ground = Bodies.rectangle(window.innerWidth / 2, window.innerHeight, window.innerWidth, 20, { isStatic: true });
+        // Add static ground for stacking
+        const ground = Bodies.rectangle(window.innerWidth / 2, window.innerHeight, window.innerWidth, 20, { 
+            isStatic: true,
+            render: { fillStyle: 'black' }
+        });
         World.add(world, ground);
+
+        // Add side walls to keep images contained
+        const leftWall = Bodies.rectangle(0, window.innerHeight / 2, 20, window.innerHeight, { isStatic: true });
+        const rightWall = Bodies.rectangle(window.innerWidth, window.innerHeight / 2, 20, window.innerHeight, { isStatic: true });
+        World.add(world, [leftWall, rightWall]);
 
         // Add mouse and touch interaction
         const mouse = Mouse.create(render.canvas);
