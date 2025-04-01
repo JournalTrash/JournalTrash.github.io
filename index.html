@@ -57,32 +57,40 @@
             let yPos = Math.random() * -500;
             
             // Image bodies
+            const imageTexture = `assets/t${i}.png`;
             const imageBody = Bodies.rectangle(xPos, yPos, 120, 120, {
                 restitution: 0.6,
                 friction: 0.5,
-                render: { sprite: { texture: `assets/t${i}.png`, xScale: 1, yScale: 1 } }
+                render: { sprite: { texture: imageTexture, xScale: 0.8, yScale: 0.8 } }
             });
             
-            // Text bodies
-            const textBody = Bodies.rectangle(xPos + 20, yPos - 40, 100, 30, {
+            // Text bodies (as separate floating elements)
+            const textBody = Bodies.rectangle(xPos, yPos - 50, 100, 30, {
                 isStatic: false,
-                render: { sprite: { texture: "assets/text-bg.png" } }
+                render: {
+                    sprite: {
+                        texture: "assets/text-bg.png"
+                    }
+                }
             });
             
             World.add(world, [imageBody, textBody]);
             items.push(imageBody, textBody);
         }
 
-        const ground = Bodies.rectangle(window.innerWidth / 2, window.innerHeight - 20, window.innerWidth, 40, { 
+        // Ground for stacking effect
+        const ground = Bodies.rectangle(window.innerWidth / 2, window.innerHeight - 50, window.innerWidth, 40, {
             isStatic: true,
             render: { fillStyle: 'black' }
         });
         World.add(world, ground);
 
+        // Side walls to keep images from going off-screen
         const leftWall = Bodies.rectangle(-10, window.innerHeight / 2, 20, window.innerHeight, { isStatic: true });
         const rightWall = Bodies.rectangle(window.innerWidth + 10, window.innerHeight / 2, 20, window.innerHeight, { isStatic: true });
         World.add(world, [leftWall, rightWall]);
 
+        // Mouse interaction for dragging images
         const mouse = Mouse.create(render.canvas);
         const mouseConstraint = MouseConstraint.create(engine, {
             mouse: mouse,
