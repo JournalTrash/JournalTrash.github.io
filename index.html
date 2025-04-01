@@ -17,25 +17,24 @@
             transform: translate(-50%, -50%);
             z-index: 10;
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         .logo {
             width: 150px; /* Adjust as needed */
-            position: relative;
+            margin-bottom: 10px; /* Space between the logos */
         }
         .translogo {
-            width: 180px; /* Slightly bigger */
-            position: absolute;
-            top: 10px; /* Adjust to make it appear under */
-            left: 50%;
-            transform: translateX(-50%);
+            width: 200px; /* Slightly bigger */
             opacity: 0.8;
         }
     </style>
 </head>
 <body>
     <div class="logo-container">
-        <img src="assets/translogo.png" alt="Transparent Logo" class="translogo">
         <img src="assets/logo.png" alt="Logo" class="logo">
+        <img src="assets/translogo.png" alt="Transparent Logo" class="translogo">
     </div>
     <script>
         const { Engine, Render, World, Bodies, Mouse, MouseConstraint } = Matter;
@@ -57,28 +56,31 @@
             items.push(Bodies.rectangle(Math.random() * window.innerWidth, 50, 100, 100, {
                 restitution: 0.5, // Add bounce effect
                 friction: 0.5,
-                render: { sprite: { texture: `t${i}.png`, xScale: 0.5, yScale: 0.5 } }
+                render: { sprite: { texture: `assets/t${i}.png`, xScale: 0.5, yScale: 0.5 } }
             }));
         }
         World.add(world, items);
 
         // Add static ground for stacking
-        const ground = Bodies.rectangle(window.innerWidth / 2, window.innerHeight, window.innerWidth, 20, { 
+        const ground = Bodies.rectangle(window.innerWidth / 2, window.innerHeight - 10, window.innerWidth, 20, { 
             isStatic: true,
             render: { fillStyle: 'black' }
         });
         World.add(world, ground);
 
         // Add side walls to keep images contained
-        const leftWall = Bodies.rectangle(0, window.innerHeight / 2, 20, window.innerHeight, { isStatic: true });
-        const rightWall = Bodies.rectangle(window.innerWidth, window.innerHeight / 2, 20, window.innerHeight, { isStatic: true });
+        const leftWall = Bodies.rectangle(-10, window.innerHeight / 2, 20, window.innerHeight, { isStatic: true });
+        const rightWall = Bodies.rectangle(window.innerWidth + 10, window.innerHeight / 2, 20, window.innerHeight, { isStatic: true });
         World.add(world, [leftWall, rightWall]);
 
         // Add mouse and touch interaction
         const mouse = Mouse.create(render.canvas);
-        mouse.pixelRatio = window.devicePixelRatio; // Ensure touch accuracy
-        const mouseConstraint = MouseConstraint.create(engine, { mouse, constraint: { stiffness: 0.2 } });
+        const mouseConstraint = MouseConstraint.create(engine, {
+            mouse: mouse,
+            constraint: { stiffness: 0.2, render: { visible: false } }
+        });
         World.add(world, mouseConstraint);
+        render.mouse = mouse;
 
         // Prevent scrolling on mobile
         document.body.addEventListener('touchmove', (e) => e.preventDefault(), { passive: false });
