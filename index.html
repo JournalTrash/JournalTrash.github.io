@@ -4,15 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Journal. Trash</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
     <style>
-        body {
-            margin: 0;
-            overflow: hidden;
-            background: pink;
-            touch-action: none;
-            position: relative;
-        }
-
+        body { margin: 0; overflow: hidden; background: pink; touch-action: none; position: relative; }
+        canvas { display: block; }
+        
         /* Centered fixed logos */
         .logo-container {
             position: fixed;
@@ -21,93 +17,84 @@
             transform: translate(-50%, -50%);
             z-index: 10;
             text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
         }
-
-        .logo {
-            width: 150px; /* Adjust as needed */
-            margin-bottom: 10px; /* Space between the logos */
-        }
-
         .translogo {
-            width: 200px; /* Slightly bigger */
+            width: 200px;
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
             opacity: 0.8;
         }
-
-        /* Falling elements (images and text) */
-        .falling-item {
-            position: absolute;
-            font-size: 20px;
-            font-weight: bold;
-            color: white;
-            text-align: center;
-            opacity: 0.9;
-            transition: all 2s ease-in;
-        }
-
-        .falling-item img {
-            width: 100px; /* Adjust image size */
-            height: 100px;
+        .logo {
+            width: 150px;
+            position: relative;
         }
     </style>
 </head>
 <body>
     <div class="logo-container">
-        <img src="assets/logo.png" alt="Logo" class="logo">
         <img src="assets/translogo.png" alt="Transparent Logo" class="translogo">
+        <img src="assets/logo.png" alt="Logo" class="logo">
     </div>
-
     <script>
-        // Total number of items (18 images and 18 pieces of text)
+        const { Engine, Render, World, Bodies, Mouse, MouseConstraint } = Matter;
+
+        const engine = Engine.create();
+        const render = Render.create({
+            element: document.body,
+            engine: engine,
+            options: { width: window.innerWidth, height: window.innerHeight, wireframes: false, background: 'pink' }
+        });
+
+        const world = engine.world;
+
+        const items = [];
         const totalItems = 18;
-        
-        // Helper function to create falling images and text
-        function createFallingItem(index, isText) {
-            const item = document.createElement('div');
-            item.classList.add('falling-item');
-            item.style.left = `${Math.random() * window.innerWidth}px`; // Random horizontal position
-            item.style.top = `-50px`; // Start above the screen
-            item.style.transition = 'top 2s ease'; // Smooth fall transition
 
-            if (isText) {
-                // Create text items
-                item.innerText = `Article ${index + 1}`;
-            } else {
-                // Create image items
-                const img = document.createElement('img');
-                img.src = `assets/t${index + 1}.png`;
-                item.appendChild(img);
-            }
-
-            document.body.appendChild(item);
-
-            // Start the falling animation after the item is created
-            setTimeout(() => {
-                // Set the fall height and start animation
-                item.style.top = `${Math.random() * (window.innerHeight - 150)}px`; // Random fall height
-            }, 100); // Slight delay to prevent jumpiness
-
-            // Stack the items once they hit the ground
-            item.addEventListener('transitionend', () => {
-                const currentTop = parseFloat(item.style.top);
-                const stackHeight = getStackHeight(currentTop);
-                item.style.top = `${stackHeight}px`; // Stack on top of each other
+        for (let i = 1; i <= totalItems; i++) {
+            let xPos = Math.random() * window.innerWidth * 0.8 + 50;
+            let yPos = Math.random() * -500;
+            
+            // Image bodies
+            const imageBody = Bodies.rectangle(xPos, yPos, 120, 120, {
+                restitution: 0.6,
+                friction: 0.5,
+                render: { sprite: { texture: `assets/t${i}.png`, xScale: 1, yScale: 1 } }
             });
+            
+            // Text bodies
+            const textBody = Bodies.rectangle(xPos + 20, yPos - 40, 100, 30, {
+                isStatic: false,
+                render: { sprite: { texture: "assets/text-bg.png" } }
+            });
+            
+            World.add(world, [imageBody, textBody]);
+            items.push(imageBody, textBody);
         }
 
-        // Function to calculate stack height to avoid overlap
-        function getStackHeight(currentTop) {
-            const margin = 10; // Distance between stacked items
-            return currentTop + margin;
-        }
+        const ground = Bodies.rectangle(window.innerWidth / 2, window.innerHeight - 20, window.innerWidth, 40, { 
+            isStatic: true,
+            render: { fillStyle: 'black' }
+        });
+        World.add(world, ground);
 
-        // Create all falling images and text
-        for (let i = 0; i < totalItems; i++) {
-            createFallingItem(i, false); // false for images
-            createFallingItem(i, true);  // true for text
-        }
+        const leftWall = Bodies.rectangle(-10, window.innerHeight / 2, 20, window.innerHeight, { isStatic: true });
+        const rightWall = Bodies.rectangle(window.innerWidth + 10, window.innerHeight / 2, 20, window.innerHeight, { isStatic: true });
+        World.add(world, [leftWall, rightWall]);
+
+        const mouse = Mouse.create(render.canvas);
+        const mouseConstraint = MouseConstraint.create(engine, {
+            mouse: mouse,
+            constraint: { stiffness: 0.2, render: { visible: false } }
+        });
+        World.add(world, mouseConstraint);
+        render.mouse = mouse;
+
+        document.body.addEventListener('touchmove', (e) => e.preventDefault(), { passive: false });
+
+        Engine.run(engine);
+        Render.run(render);
     </script>
 </body>
 </html>
