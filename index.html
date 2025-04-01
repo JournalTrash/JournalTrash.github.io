@@ -34,9 +34,9 @@
 </head>
 <body>
     <div class="logo-container">
-         <img src="assets/logo.png" alt="Logo" class="logo">
+        
+        <img src="assets/logo.png" alt="Logo" class="logo">
         <img src="assets/translogo.png" alt="Transparent Logo" class="translogo">
-       
     </div>
     <script>
         const { Engine, Render, World, Bodies, Mouse, MouseConstraint } = Matter;
@@ -51,8 +51,7 @@
         const world = engine.world;
         const items = [];
         const totalItems = 18;
-        const stackingOffset = window.innerHeight - 150;
-        let stackY = stackingOffset;
+        let stackY = window.innerHeight - 50;
 
         for (let i = 1; i <= totalItems; i++) {
             let xPos = Math.random() * (window.innerWidth - 150) + 75;
@@ -61,27 +60,29 @@
             // Image bodies
             const imageTexture = `assets/t${i}.png`;
             const imageBody = Bodies.rectangle(xPos, yPos, 150, 150, {
-                restitution: 0.4,
-                friction: 0.8,
+                restitution: 0.2,
+                friction: 0.5,
                 density: 0.05,
                 render: { sprite: { texture: imageTexture, xScale: 1, yScale: 1 } }
             });
             
             // Text bodies positioned just above the image
-            const textBody = Bodies.rectangle(xPos, yPos - 80, 150, 40, {
-                restitution: 0.4,
-                friction: 0.8,
+            const textBody = Bodies.rectangle(xPos, yPos - 90, 150, 40, {
+                restitution: 0.2,
+                friction: 0.5,
                 density: 0.05,
                 render: { fillStyle: "white" }
             });
             
-            // Set static positions when falling ends
-            Matter.Events.on(engine, "afterUpdate", function() {
-                if (imageBody.position.y > stackY) {
-                    Matter.Body.setStatic(imageBody, true);
-                    Matter.Body.setStatic(textBody, true);
-                    stackY -= 160;
-                }
+            // Ensure proper stacking when they land
+            Matter.Events.on(engine, "collisionStart", function(event) {
+                event.pairs.forEach(pair => {
+                    if (pair.bodyA === imageBody || pair.bodyB === imageBody) {
+                        Matter.Body.setStatic(imageBody, true);
+                        Matter.Body.setStatic(textBody, true);
+                        stackY -= 160;
+                    }
+                });
             });
 
             World.add(world, [imageBody, textBody]);
@@ -89,7 +90,7 @@
         }
 
         // Ground for stacking effect
-        const ground = Bodies.rectangle(window.innerWidth / 2, window.innerHeight - 50, window.innerWidth, 100, {
+        const ground = Bodies.rectangle(window.innerWidth / 2, window.innerHeight, window.innerWidth, 50, {
             isStatic: true,
             render: { fillStyle: 'transparent' }
         });
@@ -109,4 +110,10 @@
         World.add(world, mouseConstraint);
         render.mouse = mouse;
 
-        document.body.addEventListener('touchmove', (e) => e.preventDefault()
+        document.body.addEventListener('touchmove', (e) => e.preventDefault(), { passive: false });
+
+        Engine.run(engine);
+        Render.run(render);
+    </script>
+</body>
+</html>
