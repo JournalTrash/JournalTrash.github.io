@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Falling Images & Text</title>
+    <title>Journal. Trash</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
     <style>
         body { margin: 0; overflow: hidden; background: pink; touch-action: none; position: relative; }
         canvas { display: block; }
-        
+
         /* Centered fixed logos */
         .logo-container {
             position: fixed;
@@ -29,6 +29,17 @@
             width: 200px; /* Slightly bigger */
             opacity: 0.8;
         }
+
+        /* Style for falling text */
+        .falling-text {
+            position: absolute;
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+            text-align: center;
+            transition: all 0.5s ease;
+            opacity: 0.9;
+        }
     </style>
 </head>
 <body>
@@ -37,7 +48,7 @@
         <img src="assets/translogo.png" alt="Transparent Logo" class="translogo">
     </div>
     <script>
-        const { Engine, Render, World, Bodies, Mouse, MouseConstraint } = Matter;
+        const { Engine, Render, World, Bodies, Mouse, MouseConstraint, Composite } = Matter;
 
         // Create engine and renderer
         const engine = Engine.create();
@@ -49,15 +60,25 @@
 
         const world = engine.world;
 
-        // Add images as falling bodies
+        // Add images and text as falling bodies
         const items = [];
-        const totalImages = 18;
-        for (let i = 1; i <= totalImages; i++) {
-            items.push(Bodies.rectangle(Math.random() * window.innerWidth, 50, 100, 100, {
-                restitution: 0.5, // Add bounce effect
-                friction: 0.5,
+        const totalItems = 18;
+
+        for (let i = 1; i <= totalItems; i++) {
+            // Add falling images
+            const img = Bodies.rectangle(Math.random() * window.innerWidth, 50, 100, 100, {
+                restitution: 0.5,
+                friction: 0.9,
                 render: { sprite: { texture: `assets/t${i}.png`, xScale: 0.5, yScale: 0.5 } }
-            }));
+            });
+            items.push(img);
+
+            // Add falling text (as a simple rectangle for now)
+            const text = Bodies.rectangle(Math.random() * window.innerWidth, -50, 150, 30, {
+                restitution: 0.5,
+                render: { fillStyle: 'white' }
+            });
+            items.push(text);
         }
         World.add(world, items);
 
@@ -84,6 +105,14 @@
 
         // Prevent scrolling on mobile
         document.body.addEventListener('touchmove', (e) => e.preventDefault(), { passive: false });
+
+        // Update text and image positions based on physics
+        Matter.Events.on(engine, 'afterUpdate', () => {
+            items.forEach((item) => {
+                const pos = item.position;
+                item.position.y = Math.max(pos.y, window.innerHeight - 50); // Prevent going below ground
+            });
+        });
 
         // Run the engine
         Engine.run(engine);
