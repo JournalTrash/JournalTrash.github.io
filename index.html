@@ -2,97 +2,100 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Journal. Trash</title>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { overflow: hidden; background: pink; touch-action: none; position: relative; }
-        
-        /* Centered fixed logos */
-        .logo-container {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 10;
-            text-align: center;
-        }
-        .translogo {
-            width: 220px;
-            position: absolute;
-            top: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            opacity: 0.8;
-        }
-        .logo {
-            width: 180px;
-            position: relative;
+        @font-face {
+            font-family: 'W95FA';
+            src: url('W95FA.woff2') format('woff2'),
+                 url('W95FA.woff') format('woff'),
+                 url('W95FA.ttf') format('truetype'),
+                 url('W95FA.otf') format('opentype');
         }
 
-        /* Falling Items */
-        #block_container {
-            width: 100vw;
-            height: 100vh;
-            position: absolute;
-            top: 0;
-            left: 0;
+        body {
+            margin: 0;
+            font-family: 'W95FA', sans-serif;
+            color: black;
+            -webkit-text-stroke: bold;
+            cursor: none;
+            background-color: pink;
         }
 
-        .block {
-            position: absolute;
+        .landing-page {
+            background-color: pink;
+         height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .trashcan-logo {
             width: 150px;
             height: auto;
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            animation: fall var(--fall-time) cubic-bezier(0.2, 0.9, 0.3, 1) forwards;
+            cursor: pointer;
+            z-index: 1000;
         }
 
-        @keyframes fall {
-            0% { transform: translateY(-200px) rotate(var(--rotation)); opacity: 0; }
-            10% { opacity: 1; }
-            80% { transform: translateY(calc(80vh - var(--stack-offset))) rotate(var(--rotation)); }
-            100% { transform: translateY(calc(85vh - var(--stack-offset))) rotate(var(--rotation)); }
+        .cursor-image {
+            position: absolute;
+            width: 300px; /* Smaller size for smoother appearance */
+            height: auto;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
         }
+
+        @import url('https://fonts.cdnfonts.com/css/w95fa');
     </style>
 </head>
 <body>
-    <div class="logo-container">
-        <img src="assets/translogo.png" alt="Transparent Logo" class="translogo">
-        <img src="assets/logo.png" alt="Logo" class="logo">
+    <!-- Landing Page -->
+    <div class="landing-page">
+        <img src="assets/logo.png" alt="Trash Can Journal" class="trashcan-logo" onclick="location.href='pages/trashcan.html'">
+        <img src="assets/translogo.png" alt="Trash Can Logo" style="width: 300px; height: auto;" class="trashcan-logo" onclick="location.href='pages/trashcan.html'">
     </div>
 
-    <div id="block_container">
-        <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                const blockContainer = document.getElementById("block_container");
-                const totalItems = 18;
-                let stackHeight = 0;
-                
-                for (let i = 1; i <= totalItems; i++) {
-                    let block = document.createElement("div");
-                    block.classList.add("block");
-                    block.style.setProperty('--rotation', `${Math.random() * 30 - 15}deg`);
-                    block.style.setProperty('--stack-offset', `${stackHeight}px`);
-                    block.style.setProperty('--fall-time', `${0.8 + Math.random() * 0.6}s`);
-                    block.style.left = `${Math.random() * (window.innerWidth - 160)}px`;
-                    block.style.backgroundImage = `url('assets/t${i}.png')`;
-                    block.style.width = '150px';
-                    block.style.height = 'auto';
-                    
-                    let img = document.createElement("img");
-                    img.src = `assets/t${i}.png`;
-                    img.style.width = "100%";
-                    img.style.height = "auto";
-                    img.alt = `Image ${i}`;
-                    
-                    block.appendChild(img);
-                    blockContainer.appendChild(block);
-                    stackHeight += 10 + Math.random() * 5;
-                }
-            });
-        </script>
-    </div>
+    <script>
+        let currentIndex = 0;
+        const images = [
+            'assets/t1.png',
+            'assets/t2.png',
+            'assets/t3.png',
+            'assets/t4.png',
+            'assets/t5.png',
+             'assets/t7.png', 'assets/t8.png', 'assets/t9.png', 'assets/t10.png',
+            'assets/t11.png',  'assets/t13.png', 'assets/t14.png', 
+            'assets/t16.png', 'assets/t17.png', 'assets/t18.png', 
+        ];
+
+        let lastMoveTime = 0; // Store the timestamp of the last image creation
+        const delay = 200; // Delay in milliseconds between image creation
+
+        document.addEventListener('mousemove', function(event) {
+            const currentTime = Date.now();
+            
+            // Only create a new image if enough time has passed
+            if (currentTime - lastMoveTime >= delay) {
+                lastMoveTime = currentTime;
+
+                // Create a new image element
+                const img = document.createElement('img');
+                const randomIndex = Math.floor(Math.random() * images.length);
+                img.src = images[currentIndex];
+                    currentIndex = (currentIndex + 1) % images.length;
+
+                img.classList.add('cursor-image');
+                img.style.left = `${event.pageX}px`;
+                img.style.top = `${event.pageY}px`;
+
+                 const rotation = Math.random() < 0.5 ? (Math.random() * 15 - 10) : (Math.random() * 15 + 10); // Random rotation between -10 to 10 degrees
+                img.style.transform += ` rotate(${rotation}deg)`; // Apply rotation to the image
+
+
+                document.body.appendChild(img);
+            }
+        });
+    </script>
 </body>
 </html>
