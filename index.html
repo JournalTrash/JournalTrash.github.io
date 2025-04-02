@@ -46,7 +46,6 @@
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
-            border: 1px solid red; /* Debugging border */
             animation: fall 3s ease-in-out forwards;
         }
 
@@ -63,28 +62,37 @@
         <img src="assets/logo.png" alt="Logo" class="logo">
     </div>
 
-    <div id="block_container"></div>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            console.log("Script is running"); // Debugging log
-            const blockContainer = document.getElementById("block_container");
-            const totalItems = 18;
-            let stackHeight = 0;
-            
-            for (let i = 1; i <= totalItems; i++) {
-                let block = document.createElement("div");
-                block.classList.add("block");
-                block.style.setProperty('--rotation', `${Math.random() * 20 - 10}deg`);
-                block.style.setProperty('--stack-offset', `${stackHeight}px`);
-                block.style.left = `${Math.random() * (window.innerWidth - 160)}px`;
-                block.style.backgroundImage = `url('assets/t${i}.png')`;
+    <div id="block_container">
+        <!-- Images added here in HTML -->
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                console.log("Script is running"); // Debugging log
+                const blockContainer = document.getElementById("block_container");
+                const totalItems = 18;
+                let stackHeight = 0;
                 
-                console.log(`Adding image: assets/t${i}.png`); // Debugging log
-                blockContainer.appendChild(block);
-                stackHeight += 10;
-            }
-        });
-    </script>
+                for (let i = 1; i <= totalItems; i++) {
+                    let block = document.createElement("div");
+                    block.classList.add("block");
+                    block.style.setProperty('--rotation', `${Math.random() * 20 - 10}deg`);
+                    block.style.setProperty('--stack-offset', `${stackHeight}px`);
+                    block.style.left = `${Math.random() * (window.innerWidth - 160)}px`;
+                    block.style.backgroundImage = `url('assets/t${i}.png')`;
+                    block.style.width = '150px';
+                    block.style.height = 'auto';
+                    
+                    let img = document.createElement("img");
+                    img.src = `assets/t${i}.png`;
+                    img.style.width = "100%";
+                    img.style.height = "auto";
+                    img.alt = `Image ${i}`;
+                    
+                    block.appendChild(img);
+                    blockContainer.appendChild(block);
+                    stackHeight += 10;
+                }
+            });
+        </script>
+    </div>
 </body>
 </html>
