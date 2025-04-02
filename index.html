@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Journal. Trash</title>
     <style>
-        * { box-sizing: border-box; }
-        body { margin: 0; overflow: hidden; background: pink; touch-action: none; position: relative; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { overflow: hidden; background: pink; touch-action: none; position: relative; }
         
         /* Centered fixed logos */
         .logo-container {
@@ -31,39 +31,28 @@
         }
 
         /* Falling Items */
-        #page_container {
-            width: 100vw;
-            height: 100vh;
-            position: relative;
-        }
-
         #block_container {
             width: 100vw;
             height: 100vh;
             position: absolute;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: flex-start;
+            top: 0;
+            left: 0;
         }
 
         .block {
-            width: 7em;
-            height: 7em;
-            text-align: center; 
-            border: 1px solid black;
-            margin: 0.5em;
-            padding: 3em;
-            font-family: serif;
             position: absolute;
-            background: tan;
-            animation: drop 3s ease-in forwards;
+            width: auto;
+            height: auto;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            animation: fall 3s ease-in-out forwards;
         }
 
-        @keyframes drop {
-            0% { top: -50%; }
-            80% { top: 75vh; }
-            100% { top: 80vh; }
+        @keyframes fall {
+            0% { transform: translateY(-200px) rotate(0deg); opacity: 0; }
+            90% { opacity: 1; }
+            100% { transform: translateY(calc(90vh - var(--stack-offset))) rotate(var(--rotation)); }
         }
     </style>
 </head>
@@ -73,23 +62,23 @@
         <img src="assets/logo.png" alt="Logo" class="logo">
     </div>
 
-    <div id="page_container">
-        <div id="block_container"></div>
-    </div>
+    <div id="block_container"></div>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const blockContainer = document.getElementById("block_container");
             const totalItems = 18;
-
+            let stackHeight = 0;
+            
             for (let i = 1; i <= totalItems; i++) {
                 let block = document.createElement("div");
                 block.classList.add("block");
-                block.style.left = `${Math.random() * (window.innerWidth - 100)}px`;
+                block.style.setProperty('--rotation', `${Math.random() * 20 - 10}deg`);
+                block.style.setProperty('--stack-offset', `${stackHeight}px`);
+                block.style.left = `${Math.random() * (window.innerWidth - 160)}px`;
                 block.style.backgroundImage = `url('assets/t${i}.png')`;
-                block.style.backgroundSize = "cover";
-                block.style.backgroundPosition = "center";
                 blockContainer.appendChild(block);
+                stackHeight += 10;
             }
         });
     </script>
