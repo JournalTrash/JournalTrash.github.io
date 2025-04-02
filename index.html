@@ -4,10 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Journal. Trash</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
     <style>
+        * { box-sizing: border-box; }
         body { margin: 0; overflow: hidden; background: pink; touch-action: none; position: relative; }
-        canvas { display: block; }
         
         /* Centered fixed logos */
         .logo-container {
@@ -30,6 +29,42 @@
             width: 180px;
             position: relative;
         }
+
+        /* Falling Items */
+        #page_container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+
+        #block_container {
+            width: 100vw;
+            height: 100vh;
+            position: absolute;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .block {
+            width: 7em;
+            height: 7em;
+            text-align: center; 
+            border: 1px solid black;
+            margin: 0.5em;
+            padding: 3em;
+            font-family: serif;
+            position: absolute;
+            background: tan;
+            animation: drop 3s ease-in forwards;
+        }
+
+        @keyframes drop {
+            0% { top: -50%; }
+            80% { top: 75vh; }
+            100% { top: 80vh; }
+        }
     </style>
 </head>
 <body>
@@ -37,71 +72,26 @@
         <img src="assets/translogo.png" alt="Transparent Logo" class="translogo">
         <img src="assets/logo.png" alt="Logo" class="logo">
     </div>
+
+    <div id="page_container">
+        <div id="block_container"></div>
+    </div>
+
     <script>
-        const { Engine, Render, World, Bodies, Mouse, MouseConstraint, Events } = Matter;
+        document.addEventListener("DOMContentLoaded", function() {
+            const blockContainer = document.getElementById("block_container");
+            const totalItems = 18;
 
-        const engine = Engine.create();
-        const render = Render.create({
-            element: document.body,
-            engine: engine,
-            options: { width: window.innerWidth, height: window.innerHeight, wireframes: false, background: 'pink' }
+            for (let i = 1; i <= totalItems; i++) {
+                let block = document.createElement("div");
+                block.classList.add("block");
+                block.style.left = `${Math.random() * (window.innerWidth - 100)}px`;
+                block.style.backgroundImage = `url('assets/t${i}.png')`;
+                block.style.backgroundSize = "cover";
+                block.style.backgroundPosition = "center";
+                blockContainer.appendChild(block);
+            }
         });
-
-        const world = engine.world;
-        const items = [];
-        const totalItems = 18;
-        let stackY = window.innerHeight - 50;
-
-        const ground = Bodies.rectangle(window.innerWidth / 2, window.innerHeight - 25, window.innerWidth, 50, {
-            isStatic: true,
-            render: { visible: false }
-        });
-        World.add(world, ground);
-
-        for (let i = 1; i <= totalItems; i++) {
-            let xPos = Math.random() * (window.innerWidth - 150) + 75;
-            let yPos = Math.random() * -800;
-            
-            const imageTexture = `assets/t${i}.png`;
-            const imageBody = Bodies.rectangle(xPos, yPos, 150, 150, {
-                restitution: 0.2,
-                friction: 0.5,
-                density: 0.05,
-                render: { sprite: { texture: imageTexture, xScale: 1, yScale: 1 } }
-            });
-            
-            const textBody = Bodies.rectangle(xPos, yPos - 90, 150, 40, {
-                restitution: 0.2,
-                friction: 0.5,
-                density: 0.05,
-                render: { fillStyle: "white" }
-            });
-            
-            World.add(world, [imageBody, textBody]);
-            items.push(imageBody, textBody);
-        }
-
-        Events.on(engine, "collisionStart", function(event) {
-            event.pairs.forEach(pair => {
-                if ((pair.bodyA === ground && items.includes(pair.bodyB)) || (pair.bodyB === ground && items.includes(pair.bodyA))) {
-                    Matter.Body.setStatic(pair.bodyA, true);
-                    Matter.Body.setStatic(pair.bodyB, true);
-                }
-            });
-        });
-
-        const mouse = Mouse.create(render.canvas);
-        const mouseConstraint = MouseConstraint.create(engine, {
-            mouse: mouse,
-            constraint: { stiffness: 0.2, render: { visible: false } }
-        });
-        World.add(world, mouseConstraint);
-        render.mouse = mouse;
-
-        document.body.addEventListener('touchmove', (e) => e.preventDefault(), { passive: false });
-
-        Engine.run(engine);
-        Render.run(render);
     </script>
 </body>
 </html>
