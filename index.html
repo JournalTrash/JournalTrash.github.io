@@ -41,18 +41,18 @@
 
         .block {
             position: absolute;
-            width: 150px; /* Ensure images have a proper width */
-            height: auto; /* Maintain aspect ratio */
+            width: 150px;
+            height: auto;
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
-            animation: fall 3s ease-in-out forwards;
+            animation: fall 1s cubic-bezier(0.3, 1.5, 0.5, 1) forwards;
         }
 
         @keyframes fall {
-            0% { transform: translateY(-200px) rotate(0deg); opacity: 0; }
-            90% { opacity: 1; }
-            100% { transform: translateY(calc(90vh - var(--stack-offset))) rotate(var(--rotation)); }
+            0% { transform: translateY(-300px) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            100% { transform: translateY(calc(85vh - var(--stack-offset))) rotate(var(--rotation)); }
         }
     </style>
 </head>
@@ -63,10 +63,8 @@
     </div>
 
     <div id="block_container">
-        <!-- Images added here in HTML -->
         <script>
             document.addEventListener("DOMContentLoaded", function() {
-                console.log("Script is running"); // Debugging log
                 const blockContainer = document.getElementById("block_container");
                 const totalItems = 18;
                 let stackHeight = 0;
@@ -74,7 +72,7 @@
                 for (let i = 1; i <= totalItems; i++) {
                     let block = document.createElement("div");
                     block.classList.add("block");
-                    block.style.setProperty('--rotation', `${Math.random() * 20 - 10}deg`);
+                    block.style.setProperty('--rotation', `${Math.random() * 30 - 15}deg`);
                     block.style.setProperty('--stack-offset', `${stackHeight}px`);
                     block.style.left = `${Math.random() * (window.innerWidth - 160)}px`;
                     block.style.backgroundImage = `url('assets/t${i}.png')`;
@@ -89,7 +87,7 @@
                     
                     block.appendChild(img);
                     blockContainer.appendChild(block);
-                    stackHeight += 10;
+                    stackHeight += 12;
                 }
             });
         </script>
