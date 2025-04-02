@@ -46,12 +46,13 @@
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
-            animation: fall 1s cubic-bezier(0.3, 1.5, 0.5, 1) forwards;
+            animation: fall var(--fall-time) cubic-bezier(0.2, 0.9, 0.3, 1) forwards;
         }
 
         @keyframes fall {
-            0% { transform: translateY(-300px) rotate(0deg); opacity: 0; }
+            0% { transform: translateY(-200px) rotate(var(--rotation)); opacity: 0; }
             10% { opacity: 1; }
+            80% { transform: translateY(calc(80vh - var(--stack-offset))) rotate(var(--rotation)); }
             100% { transform: translateY(calc(85vh - var(--stack-offset))) rotate(var(--rotation)); }
         }
     </style>
@@ -74,6 +75,7 @@
                     block.classList.add("block");
                     block.style.setProperty('--rotation', `${Math.random() * 30 - 15}deg`);
                     block.style.setProperty('--stack-offset', `${stackHeight}px`);
+                    block.style.setProperty('--fall-time', `${0.8 + Math.random() * 0.6}s`);
                     block.style.left = `${Math.random() * (window.innerWidth - 160)}px`;
                     block.style.backgroundImage = `url('assets/t${i}.png')`;
                     block.style.width = '150px';
@@ -87,7 +89,7 @@
                     
                     block.appendChild(img);
                     blockContainer.appendChild(block);
-                    stackHeight += 12;
+                    stackHeight += 10 + Math.random() * 5;
                 }
             });
         </script>
