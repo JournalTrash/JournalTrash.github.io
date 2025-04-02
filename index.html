@@ -50,7 +50,7 @@
     </style>
 </head>
 <body>
-    <!-- Landing Page -->
+   
     <div class="landing-page">
         <img src="assets/logo.png" alt="Trash Can Journal" class="trashcan-logo" onclick="location.href='trash.html'">
         <img src="assets/translogo.png" alt="Trash Can Logo" style="width: 300px; height: auto;" class="trashcan-logo" onclick="location.href='pages/trashcan.html'">
@@ -69,17 +69,16 @@
             'assets/t16.png', 'assets/t17.png', 'assets/t18.png', 
         ];
 
-        let lastMoveTime = 0; // Store the timestamp of the last image creation
-        const delay = 200; // Delay in milliseconds between image creation
+        let lastMoveTime = 0; 
+        const delay = 200; 
 
         document.addEventListener('mousemove', function(event) {
             const currentTime = Date.now();
             
-            // Only create a new image if enough time has passed
             if (currentTime - lastMoveTime >= delay) {
                 lastMoveTime = currentTime;
 
-                // Create a new image element
+              
                 const img = document.createElement('img');
                 const randomIndex = Math.floor(Math.random() * images.length);
                 img.src = images[currentIndex];
@@ -89,8 +88,8 @@
                 img.style.left = `${event.pageX}px`;
                 img.style.top = `${event.pageY}px`;
 
-                 const rotation = Math.random() < 0.5 ? (Math.random() * 15 - 10) : (Math.random() * 15 + 10); // Random rotation between -10 to 10 degrees
-                img.style.transform += ` rotate(${rotation}deg)`; // Apply rotation to the image
+                 const rotation = Math.random() < 0.5 ? (Math.random() * 15 - 10) : (Math.random() * 15 + 10);
+                img.style.transform += ` rotate(${rotation}deg)`; 
 
 
                 document.body.appendChild(img);
