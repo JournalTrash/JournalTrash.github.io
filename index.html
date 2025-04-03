@@ -60,15 +60,15 @@
                 width: 720px;
                 height: 1280px;
                 overflow: hidden;
+                display: block;
             }
 
             /* Mobile collage images */
             .mobile-collage img {
                 position: absolute;
-                width: 150px;
-                height: auto;
-                transform: rotate(calc(-30deg + 60deg * var(--random-rotation)));
-                opacity: 0.8;
+                transform: rotate(calc(-45deg + 90deg * var(--random-rotation)));
+                opacity: 0.9;
+                z-index: var(--z-index);
             }
 
             /* Ensure logo stays above collage */
@@ -84,7 +84,7 @@
 <body>
    
     <div class="landing-page">
-        <!-- Mobile collage container (added here) -->
+        <!-- Mobile collage container -->
         <div class="mobile-collage"></div>
 
         <!-- Centered logo -->
@@ -108,22 +108,25 @@
                     'assets/t25.png'
                 ];
 
-                for (let i = 0; i < 15; i++) { // Add 15 images randomly
+                collageImages.forEach((image, index) => {
                     const img = document.createElement('img');
-                    img.src = collageImages[Math.floor(Math.random() * collageImages.length)];
+                    img.src = image;
                     
                     // Random positioning inside 720x1280
                     img.style.left = `${Math.random() * 600}px`;
                     img.style.top = `${Math.random() * 1100}px`;
 
-                    // Random size variation
-                    img.style.width = `${100 + Math.random() * 80}px`;
+                    // Random size variation (creating a more chaotic feel)
+                    img.style.width = `${80 + Math.random() * 120}px`;
 
                     // Apply random rotation
                     img.style.setProperty('--random-rotation', Math.random());
 
+                    // Random z-index to create overlapping effect
+                    img.style.setProperty('--z-index', Math.floor(Math.random() * 5));
+
                     collageContainer.appendChild(img);
-                }
+                });
             }
         });
     </script>
