@@ -66,7 +66,7 @@
             /* Mobile collage images */
             .mobile-collage img {
                 position: absolute;
-                opacity: 0.9;
+                opacity: 0.95;
                 z-index: var(--z-index);
             }
 
@@ -107,25 +107,27 @@
                     'assets/t25.png'
                 ];
 
-                collageImages.forEach((image, index) => {
+                const totalImages = 40; // Increase number of images for density
+
+                for (let i = 0; i < totalImages; i++) {
                     const img = document.createElement('img');
-                    img.src = image;
-                    
+                    img.src = collageImages[i % collageImages.length]; // Cycle through all images
+
                     // Random positioning inside 720x1280
-                    img.style.left = `${Math.random() * 600}px`;
-                    img.style.top = `${Math.random() * 1100}px`;
+                    img.style.left = `${Math.random() * 700}px`;
+                    img.style.top = `${Math.random() * 1250}px`;
 
-                    // Random size variation (creating a more chaotic feel)
-                    img.style.width = `${80 + Math.random() * 120}px`;
+                    // Increased size variation (for better cluttered effect)
+                    img.style.width = `${120 + Math.random() * 100}px`;
 
-                    // Apply random rotation
+                    // Apply random rotation for messy effect
                     img.style.transform = `rotate(${Math.random() * 60 - 30}deg)`;
 
-                    // Random z-index to create overlapping effect
+                    // Random z-index for layering effect
                     img.style.zIndex = Math.floor(Math.random() * 10);
 
                     collageContainer.appendChild(img);
-                });
+                }
             }
         });
     </script>
