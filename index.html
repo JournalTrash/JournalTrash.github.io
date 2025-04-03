@@ -107,27 +107,26 @@
                     'assets/t25.png'
                 ];
 
-                const totalImages = 40; // Increase number of images for density
-
-                for (let i = 0; i < totalImages; i++) {
+                // Ensuring every image is shown in the collage by looping through all images
+                collageImages.forEach((imageSrc, index) => {
                     const img = document.createElement('img');
-                    img.src = collageImages[i % collageImages.length]; // Cycle through all images
+                    img.src = imageSrc;
 
                     // Random positioning inside 720x1280
                     img.style.left = `${Math.random() * 700}px`;
                     img.style.top = `${Math.random() * 1250}px`;
 
-                    // Increased size variation (for better cluttered effect)
+                    // Random size variation
                     img.style.width = `${120 + Math.random() * 100}px`;
 
-                    // Apply random rotation for messy effect
+                    // Random rotation for messy effect
                     img.style.transform = `rotate(${Math.random() * 60 - 30}deg)`;
 
                     // Random z-index for layering effect
                     img.style.zIndex = Math.floor(Math.random() * 10);
 
                     collageContainer.appendChild(img);
-                }
+                });
             }
         });
     </script>
