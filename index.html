@@ -66,7 +66,6 @@
             /* Mobile collage images */
             .mobile-collage img {
                 position: absolute;
-                transform: rotate(calc(-45deg + 90deg * var(--random-rotation)));
                 opacity: 0.9;
                 z-index: var(--z-index);
             }
@@ -120,10 +119,10 @@
                     img.style.width = `${80 + Math.random() * 120}px`;
 
                     // Apply random rotation
-                    img.style.setProperty('--random-rotation', Math.random());
+                    img.style.transform = `rotate(${Math.random() * 60 - 30}deg)`;
 
                     // Random z-index to create overlapping effect
-                    img.style.setProperty('--z-index', Math.floor(Math.random() * 5));
+                    img.style.zIndex = Math.floor(Math.random() * 10);
 
                     collageContainer.appendChild(img);
                 });
@@ -153,7 +152,6 @@
                     lastMoveTime = currentTime;
 
                     const img = document.createElement('img');
-                    const randomIndex = Math.floor(Math.random() * images.length);
                     img.src = images[currentIndex];
                     currentIndex = (currentIndex + 1) % images.length;
 
