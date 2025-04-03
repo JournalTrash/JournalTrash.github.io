@@ -15,6 +15,28 @@
             cursor: none;
             background-color: pink;
         }
+        
+        @media screen and (max-width: 768px) {
+    .cursor-effect {
+        display: none; /* Hide cursor images */
+    }
+
+    .mobile-collage {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+        padding: 20px;
+    }
+
+    .mobile-collage img {
+        width: 80px; /* Adjust size */
+        height: auto;
+        transform: rotate(calc(10deg * (var(--random-rotation) - 0.5))); 
+    }
+}
+
 
         .landing-page {
             background-color: pink;
@@ -49,6 +71,28 @@
         <img src="assets/logo.png" alt="Trash Can Journal" class="trashcan-logo" onclick="location.href='trash.html'">
         <img src="assets/translogo.png" alt="Trash Can Logo" style="width: 300px; height: auto;" class="trashcan-logo" onclick="location.href='pages/trashcan.html'">
     </div>
+    <div class="mobile-collage">
+    <script>
+        const mobileCollage = document.querySelector('.mobile-collage');
+
+        if (window.innerWidth <= 768) {
+            const collageImages = [
+                'assets/t1.png', 'assets/t2.png', 'assets/t3.png', 
+                'assets/t4.png', 'assets/t5.png', 'assets/t7.png', 
+                'assets/t8.png', 'assets/t9.png', 'assets/t10.png', 'assets/t11.png',  'assets/t13.png', 'assets/t14.png', 
+            'assets/t16.png', 'assets/t17.png', 'assets/t18.png', 'assets/t19.png', 'assets/t20.png', 'assets/t21.png', 'assets/t22.png', 'assets/t23.png', 'assets/t24.png', 'assets/t25.png'
+            ];
+
+            collageImages.forEach(src => {
+                const img = document.createElement('img');
+                img.src = src;
+                img.style.setProperty('--random-rotation', Math.random()); // Adds slight rotation
+                mobileCollage.appendChild(img);
+            });
+        }
+    </script>
+</div>
+
 
     <script>
         let currentIndex = 0;
