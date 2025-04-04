@@ -22,12 +22,20 @@
          .rotate {
            animation: rotation 8s infinite linear;
            left: 0px; 
-           top: 120px; 
+           top: 1020px; 
            width: 15%; 
-           height: auto;
-          
+           height: auto;  
           
        }
+            
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+    
         a {
     text-decoration: none; 
     color: black;
