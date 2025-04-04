@@ -34,11 +34,7 @@
         }
         .second {
             position: absolute;
-            top: 90%;
-            left: 60%;
-            transform: rotate(15deg);
-            opacity: 
-            width: 200px;
+          
         }
         .draggable {
             position: absolute;
@@ -57,13 +53,17 @@
     
     <div class="image-container">
         <img src="assets/t14.png" alt="Image 1">
+        
     </div>
-    
+
+    <div class="second">
+       <img src="assets/drag2.png" alt="Absolute Trash" style="top: 250%; left: 5%; width: 700px;">
+    </div>
     
     <img src="assets/t23.png" alt="trash" class="draggable" style="top: 800%; left: 41%; width: 200px; ">
     <img src="assets/t13.png" alt="trash" class="draggable" style="top: 1000%; left: 5%; width: 200px; ">
     <img src="assets/drag1.png" alt="Who else can I blame?" class="draggable" style="top: 500%; left: 15%; width: 300px;">
-    <img src="assets/drag2.png" alt="Absolute Trash" style="top: 250%; left: 5%; width: 700px;">
+ 
     
     <script>
            document.querySelectorAll('.draggable').forEach(img => {
