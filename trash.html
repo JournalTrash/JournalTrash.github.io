@@ -64,11 +64,15 @@
     <img src="assets/t13.png" alt="Draggable Image 2" class="draggable" style="top: 25%; left: 5%;">
     
     <script>
-        document.querySelectorAll('.draggable').forEach(img => {
-            img.onmousedown = function(event) {
+           document.querySelectorAll('.draggable').forEach(img => {
+            img.onmousedown = img.ontouchstart = function(event) {
                 event.preventDefault();
-                let shiftX = event.clientX - img.getBoundingClientRect().left;
-                let shiftY = event.clientY - img.getBoundingClientRect().top;
+                let isTouch = event.type.startsWith("touch");
+                let clientX = isTouch ? event.touches[0].clientX : event.clientX;
+                let clientY = isTouch ? event.touches[0].clientY : event.clientY;
+                
+                let shiftX = clientX - img.getBoundingClientRect().left;
+                let shiftY = clientY - img.getBoundingClientRect().top;
                 img.style.position = 'absolute';
                 img.style.zIndex = 1000;
                 document.body.append(img);
@@ -79,15 +83,29 @@
                 }
                 
                 function onMouseMove(event) {
-                    moveAt(event.pageX, event.pageY);
+                    let pageX = event.pageX;
+                    let pageY = event.pageY;
+                    moveAt(pageX, pageY);
                 }
                 
-                document.addEventListener('mousemove', onMouseMove);
+                function onTouchMove(event) {
+                    let touch = event.touches[0];
+                    moveAt(touch.pageX, touch.pageY);
+                }
                 
-                img.onmouseup = function() {
-                    document.removeEventListener('mousemove', onMouseMove);
-                    img.onmouseup = null;
-                };
+                if (isTouch) {
+                    document.addEventListener('touchmove', onTouchMove, { passive: false });
+                    document.addEventListener('touchend', function onTouchEnd() {
+                        document.removeEventListener('touchmove', onTouchMove);
+                        document.removeEventListener('touchend', onTouchEnd);
+                    });
+                } else {
+                    document.addEventListener('mousemove', onMouseMove);
+                    document.addEventListener('mouseup', function onMouseUp() {
+                        document.removeEventListener('mousemove', onMouseMove);
+                        document.removeEventListener('mouseup', onMouseUp);
+                    });
+                }
             };
             img.ondragstart = function() {
                 return false;
