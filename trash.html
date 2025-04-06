@@ -5,29 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trash</title>
     <style>
-        body {
+        
+        }
+         body {
             background-color: pink;
             font-family: "Times New Roman", serif;
             letter-spacing: -0.06em;
             font-size: 80px;
-           position: relative;
-            overflow-x: hidden;
-        }
-        p, h1 {
-            transform: scaleY(1.25);
-            letter-spacing: -0.06em;
             position: relative;
-            z-index: 2;
+                overflow-x: hidden;
         }
-        
-        .sticky-text {
-    position: sticky;
-    top: 0;
-    z-index: 3;
-   
-   
-    padding: 0.2em 0;
-}
+
+        .sticky-header {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            
+            padding: 0;
+            margin: 0;
+            line-height: 1;
+        }
+
+        .sticky-header a {
+            display: block;
+            text-decoration: none;
+            color: black;
+            font-size: 80px;
+            font-family: "Times New Roman", serif;
+            letter-spacing: -0.06em;
+            transform: scaleY(1.25);
+            padding: 0;
+            margin: 0;
+        }
   
     
         a {
@@ -118,8 +127,9 @@
     </style>
 </head>
 <body>
-    <a href="index.html" class="sticky-text">Journal. Trash</a>
- 
+    <header class="sticky-header">
+    <a href="index.html">Journal. Trash</a>
+  </header>
     
     <div class="image-container">
         <img src="assets/trash1.png" alt="trash">
