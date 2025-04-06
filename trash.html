@@ -10,19 +10,15 @@
       font-family: "Times New Roman", serif;
       letter-spacing: -0.06em;
       font-size: 80px;
+      position: relative;
       overflow-x: hidden;
       margin: 0;
-    }
-
-    .page-wrapper {
-      position: relative;
-      height: 6000px; /* Make the page scrollable */
     }
 
     .sticky-header {
       position: sticky;
       top: 0;
-      z-index: 999;
+      z-index: 10;
       padding: 0;
       margin: 0;
       line-height: 1;
@@ -102,21 +98,19 @@
   </style>
 </head>
 <body>
-  <div class="page-wrapper">
-    <header class="sticky-header">
-      <a href="index.html">Journal. Trash</a>
-    </header>
+  <header class="sticky-header">
+    <a href="index.html">Journal. Trash</a>
+  </header>
 
-    <div class="image-container">
-      <img src="assets/trash1.png" alt="trash" />
-    </div>
-
-    <div class="second">
-      <img src="assets/drag2.png" alt="Absolute Trash" />
-    </div>
-
-    <img src="assets/drag1.png" alt="Who else can I blame?" class="draggable1" />
+  <div class="image-container">
+    <img src="assets/trash1.png" alt="trash" />
   </div>
+
+  <div class="second">
+    <img src="assets/drag2.png" alt="Absolute Trash" />
+  </div>
+
+  <img src="assets/drag1.png" alt="Who else can I blame?" class="draggable1" />
 
   <script>
     document.querySelectorAll('.draggable1').forEach(img => {
