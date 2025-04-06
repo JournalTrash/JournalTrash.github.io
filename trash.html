@@ -18,11 +18,10 @@
     .sticky-header {
       position: sticky;
       top: 0;
-      z-index: 10;
+      z-index: 999; /* Ensures header stays above all content */
       padding: 0;
       margin: 0;
       line-height: 1;
-        overflow-y: auto;
     }
 
     .sticky-header a {
@@ -84,13 +83,12 @@
       }
 
       .second {
-         position: absolute;
+        position: absolute;
         top: 40%;
         left: 0% !important;
         width: 300px;
-            z-index: 2;
+        z-index: 2;
         transform: rotate(30deg);
-        
       }
 
       .draggable1 {
