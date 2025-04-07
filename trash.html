@@ -5,14 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Trash</title>
   <style>
-   <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Trash</title>
-  <style>
-    
     body {
       background-color: pink;
       font-family: "Times New Roman", serif;
@@ -27,7 +19,7 @@
       top: 0;
       z-index: 10;
       line-height: 1;
-      background: NONE;
+      background: none;
     }
 
     .sticky-header a {
@@ -42,7 +34,7 @@
     }
 
     .image-container {
-      margin-top: 50vh;
+      margin-top: 150vh;
       margin-left: 20%;
       transform: rotate(-10deg);
       z-index: 1;
@@ -56,7 +48,7 @@
     }
 
     .second {
-      margin-top: 20vh;
+      margin-top: 150vh;
       margin-left: 10%;
       width: 700px;
       z-index: 2;
@@ -64,7 +56,7 @@
     }
 
     .draggable1 {
-      top: 80vh;
+      top: 500vh;
       left: 40%;
       cursor: grab;
       width: 300px;
@@ -159,59 +151,3 @@
   </script>
 </body>
 </html>
-
-
-  </style>
-</head>
-<body>
-  <header class="sticky-header">
-    <a href="index.html">Journal. Trash</a>
-  </header>
-
-  <div class="image-container">
-    <img src="assets/trash1.png" alt="trash" />
-  </div>
-
-  <div class="second">
-    <img src="assets/drag2.png" alt="Absolute Trash" />
-  </div>
-
-  <img src="assets/drag1.png" alt="Who else can I blame?" class="draggable1" />
-
-  <script>
-    const img = document.querySelector('.draggable1');
-
-    img.onmousedown = img.ontouchstart = function(event) {
-      event.preventDefault();
-      let isTouch = event.type.startsWith("touch");
-      let clientX = isTouch ? event.touches[0].clientX : event.clientX;
-      let clientY = isTouch ? event.touches[0].clientY : event.clientY;
-
-      let shiftX = clientX - img.getBoundingClientRect().left;
-      let shiftY = clientY - img.getBoundingClientRect().top;
-
-      function moveAt(pageX, pageY) {
-        img.style.left = pageX - shiftX + 'px';
-        img.style.top = pageY - shiftY + 'px';
-      }
-
-      function onMouseMove(event) {
-        moveAt(event.pageX, event.pageY);
-      }
-
-      function onTouchMove(event) {
-        let touch = event.touches[0];
-        moveAt(touch.pageX, touch.pageY);
-      }
-
-      if (isTouch) {
-        document.addEventListener('touchmove', onTouchMove, { passive: false });
-        document.addEventListener('touchend', function onTouchEnd() {
-          document.removeEventListener('touchmove', onTouchMove);
-          document.removeEventListener('touchend', onTouchEnd);
-        });
-      } else {
-        document.addEventListener('mousemove', onMouseMove);
-        document.addEventListener('mouseup', function onMouseUp() {
-          document.removeEventListener('mousemove', onMouseMove);
-          document.removeEventListener('mouseup
