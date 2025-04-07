@@ -129,6 +129,27 @@
       .layered-images {
         width: 300px;
       }
+      
+.insta-at {
+  display: block;
+  text-align: center;
+  font-size: 50px;
+  font-family: "Times New Roman", serif;
+     transform: scaleY(1.25);
+  text-decoration: none;
+  color: black;
+  animation: spin 60s linear infinite;
+  margin-top: 100px;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
 
      .draggable1 {
       top: 60vh;
@@ -157,6 +178,9 @@
       <div class="image-container">
         <img src="assets/trash1.png" alt="trash" />
       </div>
+      
+      <a href="https://www.instagram.com/yourusername" target="_blank" class="insta-at">@</a>
+
       <div class="second">
         <img src="assets/drag2.png" alt="Absolute Trash" />
       </div>
