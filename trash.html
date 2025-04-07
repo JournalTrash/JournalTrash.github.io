@@ -33,38 +33,53 @@
       margin: 0;
     }
 
-    .image-container {
-      margin-top: 10vh;
-      margin-left: 20%;
-      transform: rotate(-10deg);
-      z-index: 1;
-      width: 500px;
+    .overlay-wrapper {
       position: relative;
+      width: 100%;
+      height: 500vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
     }
 
-    .image-container img {
+    .layered-images {
+      position: relative;
+      width: 700px;
+      height: auto;
+    }
+
+    .image-container,
+    .second {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+    }
+
+    .image-container {
+      transform: rotate(-10deg);
+      z-index: 1;
+    }
+
+    .second {
+      transform: rotate(5deg);
+      z-index: 2;
+    }
+
+    .image-container img,
+    .second img {
       width: 100%;
       height: auto;
     }
 
-    .second {
-      margin-top: 20vh;
-      margin-left: 10%;
-      width: 700px;
-      z-index: 2;
-      position: relative;
-    }
-
     .draggable1 {
-      top: 40vh;
+      top: 70vh;
       left: 40%;
       cursor: grab;
       width: 300px;
       height: auto;
-      resize: both;
-      overflow: hidden;
       z-index: 3;
-      position: absolute;
+      position: fixed;
     }
 
     @media (max-width: 768px) {
@@ -72,13 +87,8 @@
         font-size: 30px;
       }
 
-      .image-container {
-        width: 200px;
-      }
-
-      .second {
+      .layered-images {
         width: 300px;
-        transform: rotate(30deg);
       }
 
       .draggable1 {
@@ -92,12 +102,15 @@
     <a href="index.html">Journal. Trash</a>
   </header>
 
-  <div class="image-container">
-    <img src="assets/trash1.png" alt="trash" />
-  </div>
-
-  <div class="second">
-    <img src="assets/drag2.png" alt="Absolute Trash" />
+  <div class="overlay-wrapper">
+    <div class="layered-images">
+      <div class="image-container">
+        <img src="assets/trash1.png" alt="trash" />
+      </div>
+      <div class="second">
+        <img src="assets/drag2.png" alt="Absolute Trash" />
+      </div>
+    </div>
   </div>
 
   <img src="assets/drag1.png" alt="Who else can I blame?" class="draggable1" id="draggable1" />
