@@ -157,51 +157,43 @@
   <img src="assets/drag1.png" alt="Who else can I blame?" class="draggable1" id="draggable1" />
 
   <script>
-    const img = document.getElementById('draggable1');
-
-    img.addEventListener('mousedown', dragStart);
-    img.addEventListener('touchstart', dragStart, { passive: false });
-
     function dragStart(e) {
-      e.preventDefault();
-      const isTouch = e.type === 'touchstart';
-      const clientX = isTouch ? e.touches[0].clientX : e.clientX;
-      const clientY = isTouch ? e.touches[0].clientY : e.clientY;
+  e.preventDefault();
+  const isTouch = e.type === 'touchstart';
+  const clientX = isTouch ? e.touches[0].clientX : e.clientX;
+  const clientY = isTouch ? e.touches[0].clientY : e.clientY;
 
-      const shiftX = clientX - img.getBoundingClientRect().left;
-      const shiftY = clientY - img.getBoundingClientRect().top;
+  const shiftX = clientX - img.getBoundingClientRect().left;
+  const shiftY = clientY - img.getBoundingClientRect().top;
 
-      function moveAt(pageX, pageY) {
-        img.style.left = pageX - shiftX + 'px';
-        img.style.top = pageY - shiftY + 'px';
-      }
+  function moveAt(x, y) {
+    img.style.left = x - shiftX + 'px';
+    img.style.top = y - shiftY + 'px';
+  }
 
-      function onMouseMove(e) {
-        moveAt(e.pageX, e.pageY);
-      }
+  function onMouseMove(e) {
+    moveAt(e.clientX, e.clientY);
+  }
 
-      function onTouchMove(e) {
-        moveAt(e.touches[0].pageX, e.touches[0].pageY);
-      }
+  function onTouchMove(e) {
+    moveAt(e.touches[0].clientX, e.touches[0].clientY);
+  }
 
-      if (isTouch) {
-        document.addEventListener('touchmove', onTouchMove, { passive: false });
-        document.addEventListener('touchend', function touchEnd() {
-          document.removeEventListener('touchmove', onTouchMove);
-          document.removeEventListener('touchend', touchEnd);
-        });
-      } else {
-        document.addEventListener('mousemove', onMouseMove);
-        document.addEventListener('mouseup', function mouseUp() {
-          document.removeEventListener('mousemove', onMouseMove);
-          document.removeEventListener('mouseup', mouseUp);
-        });
-      }
-    }
+  if (isTouch) {
+    document.addEventListener('touchmove', onTouchMove, { passive: false });
+    document.addEventListener('touchend', function touchEnd() {
+      document.removeEventListener('touchmove', onTouchMove);
+      document.removeEventListener('touchend', touchEnd);
+    });
+  } else {
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', function mouseUp() {
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', mouseUp);
+    });
+  }
+}
 
-    img.ondragstart = function () {
-      return false;
-    };
   </script>
 
   <footer>
