@@ -167,44 +167,53 @@
   <img src="assets/drag1.png" alt="Who else can I blame?" class="draggable1" id="draggable1" />
 
   <script>
-    function dragStart(e) {
-  e.preventDefault();
-  const isTouch = e.type === 'touchstart';
-  const clientX = isTouch ? e.touches[0].clientX : e.clientX;
-  const clientY = isTouch ? e.touches[0].clientY : e.clientY;
+  const img = document.getElementById('draggable1');
 
-  const shiftX = clientX - img.getBoundingClientRect().left;
-  const shiftY = clientY - img.getBoundingClientRect().top;
+  img.addEventListener('mousedown', dragStart);
+  img.addEventListener('touchstart', dragStart, { passive: false });
 
-  function moveAt(x, y) {
-    img.style.left = x - shiftX + 'px';
-    img.style.top = y - shiftY + 'px';
+  function dragStart(e) {
+    e.preventDefault();
+    const isTouch = e.type === 'touchstart';
+    const clientX = isTouch ? e.touches[0].clientX : e.clientX;
+    const clientY = isTouch ? e.touches[0].clientY : e.clientY;
+
+    const shiftX = clientX - img.getBoundingClientRect().left;
+    const shiftY = clientY - img.getBoundingClientRect().top;
+
+    function moveAt(x, y) {
+      img.style.left = x - shiftX + 'px';
+      img.style.top = y - shiftY + 'px';
+    }
+
+    function onMouseMove(e) {
+      moveAt(e.clientX, e.clientY);
+    }
+
+    function onTouchMove(e) {
+      moveAt(e.touches[0].clientX, e.touches[0].clientY);
+    }
+
+    if (isTouch) {
+      document.addEventListener('touchmove', onTouchMove, { passive: false });
+      document.addEventListener('touchend', function touchEnd() {
+        document.removeEventListener('touchmove', onTouchMove);
+        document.removeEventListener('touchend', touchEnd);
+      });
+    } else {
+      document.addEventListener('mousemove', onMouseMove);
+      document.addEventListener('mouseup', function mouseUp() {
+        document.removeEventListener('mousemove', onMouseMove);
+        document.removeEventListener('mouseup', mouseUp);
+      });
+    }
   }
 
-  function onMouseMove(e) {
-    moveAt(e.clientX, e.clientY);
-  }
+  img.ondragstart = function () {
+    return false;
+  };
+</script>
 
-  function onTouchMove(e) {
-    moveAt(e.touches[0].clientX, e.touches[0].clientY);
-  }
-
-  if (isTouch) {
-    document.addEventListener('touchmove', onTouchMove, { passive: false });
-    document.addEventListener('touchend', function touchEnd() {
-      document.removeEventListener('touchmove', onTouchMove);
-      document.removeEventListener('touchend', touchEnd);
-    });
-  } else {
-    document.addEventListener('mousemove', onMouseMove);
-    document.addEventListener('mouseup', function mouseUp() {
-      document.removeEventListener('mousemove', onMouseMove);
-      document.removeEventListener('mouseup', mouseUp);
-    });
-  }
-}
-
-  </script>
 
   <footer>
     <span class="marquee">
