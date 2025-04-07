@@ -5,13 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Trash</title>
   <style>
-   <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Trash</title>
-  <style>
     body {
       background-color: pink;
       font-family: "Times New Roman", serif;
@@ -26,7 +19,7 @@
       top: 0;
       z-index: 10;
       line-height: 1;
-      background: none;
+      background: pink;
     }
 
     .sticky-header a {
@@ -63,15 +56,15 @@
     }
 
     .draggable1 {
-      margin-top: 500vh;
-      margin-left: 40%;
+      position: absolute;
+      top: 500vh;
+      left: 40%;
       cursor: grab;
       width: 300px;
       height: auto;
       resize: both;
       overflow: hidden;
       z-index: 3;
-      position: relative;
     }
 
     @media (max-width: 768px) {
@@ -110,121 +103,39 @@
   <img src="assets/drag1.png" alt="Who else can I blame?" class="draggable1" />
 
   <script>
-    document.querySelectorAll('.draggable1').forEach(img => {
-      img.onmousedown = img.ontouchstart = function(event) {
-        event.preventDefault();
-        let isTouch = event.type.startsWith("touch");
-        let clientX = isTouch ? event.touches[0].clientX : event.clientX;
-        let clientY = isTouch ? event.touches[0].clientY : event.clientY;
+    const img = document.querySelector('.draggable1');
 
-        let shiftX = clientX - img.getBoundingClientRect().left;
-        let shiftY = clientY - img.getBoundingClientRect().top;
-        img.style.position = 'absolute';
-        img.style.zIndex = 1000;
-        document.body.append(img);
+    img.onmousedown = img.ontouchstart = function(event) {
+      event.preventDefault();
+      let isTouch = event.type.startsWith("touch");
+      let clientX = isTouch ? event.touches[0].clientX : event.clientX;
+      let clientY = isTouch ? event.touches[0].clientY : event.clientY;
 
-        function moveAt(pageX, pageY) {
-          img.style.left = pageX - shiftX + 'px';
-          img.style.top = pageY - shiftY + 'px';
-        }
+      let shiftX = clientX - img.getBoundingClientRect().left;
+      let shiftY = clientY - img.getBoundingClientRect().top;
 
-        function onMouseMove(event) {
-          moveAt(event.pageX, event.pageY);
-        }
+      function moveAt(pageX, pageY) {
+        img.style.left = pageX - shiftX + 'px';
+        img.style.top = pageY - shiftY + 'px';
+      }
 
-        function onTouchMove(event) {
-          let touch = event.touches[0];
-          moveAt(touch.pageX, touch.pageY);
-        }
+      function onMouseMove(event) {
+        moveAt(event.pageX, event.pageY);
+      }
 
-        if (isTouch) {
-          document.addEventListener('touchmove', onTouchMove, { passive: false });
-          document.addEventListener('touchend', function onTouchEnd() {
-            document.removeEventListener('touchmove', onTouchMove);
-            document.removeEventListener('touchend', onTouchEnd);
-          });
-        } else {
-          document.addEventListener('mousemove', onMouseMove);
-          document.addEventListener('mouseup', function onMouseUp() {
-            document.removeEventListener('mousemove', onMouseMove);
-            document.removeEventListener('mouseup', onMouseUp);
-          });
-        }
-      };
+      function onTouchMove(event) {
+        let touch = event.touches[0];
+        moveAt(touch.pageX, touch.pageY);
+      }
 
-      img.ondragstart = function() {
-        return false;
-      };
-    });
-  </script>
-</body>
-</html>
-
-
-  </style>
-</head>
-<body>
-  <header class="sticky-header">
-    <a href="index.html">Journal. Trash</a>
-  </header>
-
-  <div class="image-container">
-    <img src="assets/trash1.png" alt="trash" />
-  </div>
-
-  <div class="second">
-    <img src="assets/drag2.png" alt="Absolute Trash" />
-  </div>
-
-  <img src="assets/drag1.png" alt="Who else can I blame?" class="draggable1" />
-
-  <script>
-    document.querySelectorAll('.draggable1').forEach(img => {
-      img.onmousedown = img.ontouchstart = function(event) {
-        event.preventDefault();
-        let isTouch = event.type.startsWith("touch");
-        let clientX = isTouch ? event.touches[0].clientX : event.clientX;
-        let clientY = isTouch ? event.touches[0].clientY : event.clientY;
-
-        let shiftX = clientX - img.getBoundingClientRect().left;
-        let shiftY = clientY - img.getBoundingClientRect().top;
-        img.style.position = 'absolute';
-        img.style.zIndex = 1000;
-        document.body.append(img);
-
-        function moveAt(pageX, pageY) {
-          img.style.left = pageX - shiftX + 'px';
-          img.style.top = pageY - shiftY + 'px';
-        }
-
-        function onMouseMove(event) {
-          moveAt(event.pageX, event.pageY);
-        }
-
-        function onTouchMove(event) {
-          let touch = event.touches[0];
-          moveAt(touch.pageX, touch.pageY);
-        }
-
-        if (isTouch) {
-          document.addEventListener('touchmove', onTouchMove, { passive: false });
-          document.addEventListener('touchend', function onTouchEnd() {
-            document.removeEventListener('touchmove', onTouchMove);
-            document.removeEventListener('touchend', onTouchEnd);
-          });
-        } else {
-          document.addEventListener('mousemove', onMouseMove);
-          document.addEventListener('mouseup', function onMouseUp() {
-            document.removeEventListener('mousemove', onMouseMove);
-            document.removeEventListener('mouseup', onMouseUp);
-          });
-        }
-      };
-
-      img.ondragstart = function() {
-        return false;
-      };
-    });
-  </script>
-</body>
-</html>
+      if (isTouch) {
+        document.addEventListener('touchmove', onTouchMove, { passive: false });
+        document.addEventListener('touchend', function onTouchEnd() {
+          document.removeEventListener('touchmove', onTouchMove);
+          document.removeEventListener('touchend', onTouchEnd);
+        });
+      } else {
+        document.addEventListener('mousemove', onMouseMove);
+        document.addEventListener('mouseup', function onMouseUp() {
+          document.removeEventListener('mousemove', onMouseMove);
+          document.removeEventListener('mouseup
