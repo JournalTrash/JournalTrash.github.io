@@ -1,154 +1,290 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Research Paper Example</title>
-    <style>
-        body {
-            font-family: "Times New Roman", serif;
-            color: #28282B;
-            background-color: pink;
-            margin: 0;
-            padding: 0;
-            line-height: 1.6;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Trash</title>
+  <style>
+   
+    body {
+      background-color: pink;
+      font-family: "Times New Roman", serif;
+      font-size: 80px;
+    }
 
-        .sticky-header {
-            position: sticky;
-            top: 0;
-            z-index: 10;
-            background: none;
-            line-height: 1;
-            padding: 20px;
-        }
+    .sticky-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      line-height: 1;
+      background: none;
+    }
 
-        .sticky-header a {
-            display: block;
-            text-decoration: none;
-            color: #28282B;
-            font-size: 80px;
-            letter-spacing: -0.06em;
-            transform: scaleY(1.25);
-            margin: 0;
-            padding-left: 0;
-        }
+    .sticky-header a {
+      display: block;
+      text-decoration: none;
+      color: #28282B;
+      font-size: 80px;
+      font-family: "Times New Roman", serif;
+      letter-spacing: -0.06em;
+      transform: scaleY(1.25);
+      margin: 0;
+      padding-left: 0;
+    }
 
-        /* Side menu */
-        .side-menu {
-            position: fixed;
-            top: 80px; /* Ensures the side menu is below the header */
-            left: 0;
-            width: 200px;
-            height: 100%;
-            background-color: pink;
-            padding-top: 20px;
-            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-        }
+    .overlay-wrapper {
+      position: relative;
+      width: 100%;
+      height: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
-        .side-menu a {
-            display: block;
-            padding: 10px 15px;
-            text-decoration: none;
-            color: #28282B;
-            font-size: 40px;
-            text-transform: uppercase;
-            font-weight: bold;
-            line-height: 1.2;
-        }
+    .insta-at {
+      display: block;
+      text-align: center;
+      font-size: 100px;
+      font-family: "Times New Roman", serif;
+      transform: scaleY(1.25) rotate(-40deg);
+      text-decoration: none;
+      color: #28282B;
+      margin-top: 1400px;
+      position: relative;
+      z-index: 5;
+    }
 
-        .side-menu a:hover {
-            background-color: #ddd;
-        }
+    .link-list {
+      list-style-type: none; 
+      margin-top: 50px;
+      z-index: 5;
+      position: relative;
+      width: 100%;
+      text-align: left; 
+      padding-left: 80px;
+      margin-left: 80px;
+    }
 
-        /* Main content */
-        .content {
-            margin-left: 220px;
-            padding: 40px;
-        }
+    .link-list li {
+      margin: 8px 0; 
+    }
 
-        .content h1 {
-            font-size: 40px;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
+    .link-list a {
+      text-decoration: none;
+      color: #28282B;
+      font-size: 80px;
+      font-family: "Times New Roman", serif;
+      letter-spacing: -0.06em;
+      transform: scaleY(1.25);
+      display: inline-block;
+      padding-left: 100px;
+    }
 
-        .content p {
-            font-size: 18px;
-            margin-bottom: 20px;
-        }
+    .link-list a:hover {
+      text-decoration: underline;
+    }
 
-        .content footer {
-            font-size: 16px;
-            margin-top: 40px;
-        }
+    .link-list a img {
+      width: 85px;
+      height: auto;
+      margin-left: 8px;
+      vertical-align: middle;
+    }
 
-        /* Footnotes */
-        .footnote {
-            font-size: 14px;
-            text-align: left;
-            margin-top: 20px;
-        }
+    .layered-images {
+      position: relative;
+      width: 700px;
+      height: auto;
+    }
 
-        .footnote a {
-            text-decoration: none;
-            color: #28282B;
-        }
+    .image-container,
+    .second {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+    }
 
-        /* Footnote appearance on hover */
-        .footnote span {
-            position: relative;
-            display: inline-block;
-        }
+    .image-container {
+      transform: rotate(-10deg);
+      z-index: 1;
+    }
 
-        .footnote span:hover::after {
-            content: attr(data-footnote);
-            position: absolute;
-            left: 50%;
-            top: 100%;
-            transform: translateX(-50%);
-            background-color: #28282B; /* Matt black background */
-            color: pink; /* Pink font */
-            padding: 10px 20px;
-            border-radius: 25px;
-            font-size: 14px;
-            white-space: nowrap;
-        }
-    </style>
+    .second {
+      margin-left: -50px;
+      transform: rotate(5deg);
+      z-index: 2;
+    }
+
+    .image-container img,
+    .second img {
+      width: 100%;
+      height: auto;
+    }
+
+    .draggable1 {
+      top: 70vh;
+      left: 20%;
+      cursor: grab;
+      width: 300px;
+      height: auto;
+      z-index: 3;
+      position: fixed;
+    }
+
+    footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: transparent;
+      color: #28282B;
+      font-family: "Times New Roman", serif;
+      letter-spacing: -0.06em;
+      transform: scaleY(1.25);
+      font-size: 60px;
+      overflow: hidden;
+      z-index: 1000;
+      height: 80px;
+      display: flex;
+      align-items: center;
+    }
+
+    .marquee {
+      display: inline-block;
+      white-space: nowrap;
+      animation: scroll-left 120s linear infinite;
+      padding-left: 100%;
+    }
+
+    @keyframes scroll-left {
+      0% {
+        transform: translateX(0%);
+      }
+      100% {
+        transform: translateX(-100%);
+      }
+    }
+
+    @media (max-width: 768px) {
+      body {
+        font-size: 30px;
+      }
+
+      .sticky-header a {
+        font-size: 60px;
+      }
+
+      .layered-images {
+        width: 300px;
+      }
+
+      .insta-at {
+        font-size: 50px;
+        margin-top: 750px;
+        transform: scaleY(1.25) rotate(-40deg);
+      }
+
+      .draggable1 {
+        top: 60vh;
+        left: 1%;
+        width: 200px;
+      }
+
+      .link-list a {
+        font-size: 80px;
+      }
+
+      .link-list a img {
+        width: 40px;
+      }
+
+      footer {
+        font-size: 40px;
+        height: 60px;
+      }
+    }
+  </style>
 </head>
 <body>
-
-<header class="sticky-header">
+  <header class="sticky-header">
     <a href="index.html">Journal. Trash</a>
-</header>
+  </header>
 
-<div class="side-menu">
-    <a href="#section1">Introduction</a>
-    <a href="#section2">Methodology</a>
-    <a href="#section3">Analysis</a>
-    <a href="#section4">Conclusion</a>
-</div>
+  <div class="overlay-wrapper">
+    <div class="layered-images">
+      <div class="image-container">
+        <img src="assets/trash1.png" alt="trash" />
+      </div>
 
-<div class="content">
-    <h1 id="section1">Introduction</h1>
-    <p>This is an example of how a research paper could be formatted. The content goes here and should be written as part of the paper's introduction.</p>
+      <a href="https://www.instagram.com/journal.trash/" target="_blank" class="insta-at">@</a>
 
-    <h1 id="section2">Methodology</h1>
-    <p>This section explains the methodology used in the research. The method section might discuss the research design, sample size, data collection methods, and any limitations of the study.</p>
+      <div class="second">
+        <img src="assets/drag2.png" alt="Absolute Trash" />
+      </div>
+    </div>
 
-    <h1 id="section3">Analysis</h1>
-    <p>In this section, we analyze the data collected during the research. This could include tables, figures, and any other relevant information that aids in understanding the results.</p>
+    <ol class="link-list">
+      <li><a href="JT1.html">1~The Dialectics of Exclusion <img src="assets/eye.png" alt="eye"></a></li>
+      <li><a href="JT2.html">2~Phenomenology of Power <img src="assets/eye.png" alt="eye"></a></li>
+      <li><a href="JT3.html">3~The Banality of Degradation <img src="assets/eye.png" alt="eye"></a></li>
+    </ol>
+  </div>
 
-    <h1 id="section4">Conclusion</h1>
-    <p>The conclusion summarizes the findings of the research and discusses any implications for future work or policies.</p>
+  <img src="assets/drag1.png" alt="Who else can I blame?" class="draggable1" id="draggable1" />
 
-    <footer>
-        <div class="footnote">
-            <p>1. Footnote example for reference 1. <span data-footnote="This is the detailed information for footnote 1.">[Hover for details]</span></p>
-            <p>2. Footnote example for reference 2. <span data-footnote="This is the detailed information for footnote 2.">[Hover for details]</span></p>
-        </div>
-    </footer>
-</div>
+  <footer>
+    <span class="marquee">
+      To engage with the Indian context afresh is to resist the inertia of established interpretations—a task that demands both moral courage and a radical rethinking of inherited ideas. Durkheim’s insights remind us that social facts, those peculiar entities of collective life, must be studied in their own right rather than merely as echoes of universal abstractions. It is only through this rigorous reexamination that we can hope to comprehend the complex tapestry of Indian society, whose vibrant plurality defies reduction to any singular doctrine. In this pursuit, our duty is not only to observe but also to interpret, lest we fall prey to the seductions of the familiar and the inert.
+    </span>
+  </footer>
 
+  <script>
+    const img = document.getElementById('draggable1');
+
+    img.addEventListener('mousedown', dragStart);
+    img.addEventListener('touchstart', dragStart, { passive: false });
+
+    function dragStart(e) {
+      e.preventDefault();
+      const isTouch = e.type === 'touchstart';
+      const clientX = isTouch ? e.touches[0].clientX : e.clientX;
+      const clientY = isTouch ? e.touches[0].clientY : e.clientY;
+
+      const shiftX = clientX - img.getBoundingClientRect().left;
+      const shiftY = clientY - img.getBoundingClientRect().top;
+
+      function moveAt(x, y) {
+        img.style.left = x - shiftX + 'px';
+        img.style.top = y - shiftY + 'px';
+      }
+
+      function onMouseMove(e) {
+        moveAt(e.clientX, e.clientY);
+      }
+
+      function onTouchMove(e) {
+        moveAt(e.touches[0].clientX, e.touches[0].clientY);
+      }
+
+      if (isTouch) {
+        document.addEventListener('touchmove', onTouchMove, { passive: false });
+        document.addEventListener('touchend', function touchEnd() {
+          document.removeEventListener('touchmove', onTouchMove);
+          document.removeEventListener('touchend', touchEnd);
+        });
+      } else {
+        document.addEventListener('mousemove', onMouseMove);
+        document.addEventListener('mouseup', function mouseUp() {
+          document.removeEventListener('mousemove', onMouseMove);
+          document.removeEventListener('mouseup', mouseUp);
+        });
+      }
+    }
+
+    img.ondragstart = function () {
+      return false;
+    };
+  </script>
 </body>
 </html>
