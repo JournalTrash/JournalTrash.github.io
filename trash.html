@@ -25,7 +25,7 @@
     .sticky-header a {
       display: block;
       text-decoration: none;
-      color: 	#28282B;
+      color: #28282B;
       font-size: 80px;
       font-family: "Times New Roman", serif;
       letter-spacing: -0.06em;
@@ -36,24 +36,59 @@
     .overlay-wrapper {
       position: relative;
       width: 100%;
-      height: 500vh;
+      height: auto;
       display: flex;
-      justify-content: center;
-      align-items: flex-start;
+      flex-direction: column;
+      align-items: center;
     }
-    
+
     .insta-at {
-  display: block;
-  text-align: center;
-  font-size: 100px;
-  font-family: "Times New Roman", serif;
-  transform: scaleY(1.25) rotate(-40deg);
-  text-decoration: none;
-  color: 	#28282B;
-  margin-top: 1400px; /* adjust based on visual spacing */
-  position: relative;
-  z-index: 5;
-}
+      display: block;
+      text-align: center;
+      font-size: 100px;
+      font-family: "Times New Roman", serif;
+      transform: scaleY(1.25) rotate(-40deg);
+      text-decoration: none;
+      color: #28282B;
+      margin-top: 1400px;
+      position: relative;
+      z-index: 5;
+    }
+
+    .link-list {
+      list-style-type: none;
+      padding-left: 0;
+      margin-top: 50px;
+      z-index: 5;
+      position: relative;
+      width: 100%;
+      text-align: center;
+    }
+
+    .link-list li {
+      margin: 30px 0;
+    }
+
+    .link-list a {
+      text-decoration: none;
+      color: #28282B;
+      font-size: 80px;
+      font-family: "Times New Roman", serif;
+      transform: scaleY(1.25);
+      display: inline-block;
+      padding-left: 10px;
+    }
+
+    .link-list a:hover {
+      text-decoration: underline;
+    }
+
+    .link-list a img {
+      width: 40px;
+      height: auto;
+      margin-left: 8px;
+      vertical-align: middle;
+    }
 
     .layered-images {
       position: relative;
@@ -102,8 +137,8 @@
       left: 0;
       width: 100%;
       background: transparent;
-      color: 	#28282B;
-         font-family: "Times New Roman", serif;
+      color: #28282B;
+      font-family: "Times New Roman", serif;
       letter-spacing: -0.06em;
       transform: scaleY(1.25);
       font-size: 60px;
@@ -142,49 +177,29 @@
       .layered-images {
         width: 300px;
       }
-      
-.insta-at {
- 
-  font-size: 50px;
-   margin-top: 750px;
-  transform: scaleY(1.25) rotate(-40deg);
- 
-}
 
+      .insta-at {
+        font-size: 50px;
+        margin-top: 750px;
+        transform: scaleY(1.25) rotate(-40deg);
+      }
 
+      .draggable1 {
+        top: 60vh;
+        left: 1%;
+        width: 200px;
+      }
 
-     .draggable1 {
-      top: 60vh;
-      left: 1%;
-      width: 200px;
-    }
-    }
-    
-     ol li a {
-  text-decoration: none;
-  color: #28282B;
-  font-size: 80px;
-       Left; 10px;
-}
+      .link-list a {
+        font-size: 80px;
+      }
 
-ol li a:hover {
-  text-decoration: underline;
-}
-
-ol li a img {
-  width: 15px;
-  height: auto;
-  margin-left: 8px;
-  vertical-align: middle;
-}
-   
-
+      .link-list a img {
+        width: 40px;
+      }
 
       footer {
         font-size: 40px;
-           font-family: "Times New Roman", serif;
-      letter-spacing: -0.06em;
-      transform: scaleY(1.25);
         height: 60px;
       }
     }
@@ -200,77 +215,75 @@ ol li a img {
       <div class="image-container">
         <img src="assets/trash1.png" alt="trash" />
       </div>
-      
+
       <a href="https://www.instagram.com/journal.trash/" target="_blank" class="insta-at">@</a>
 
       <div class="second">
         <img src="assets/drag2.png" alt="Absolute Trash" />
       </div>
     </div>
+
+    <ol class="link-list">
+      <li><a href="JT1.html">The Dialectics of Exclusion <img src="assets/eye.png" alt="eye"></a></li>
+      <li><a href="JT2.html">Phenomenology of Power <img src="assets/eye.png" alt="eye"></a></li>
+      <li><a href="JT3.html">The Banality of Degradation <img src="assets/eye.png" alt="eye"></a></li>
+    </ol>
   </div>
 
   <img src="assets/drag1.png" alt="Who else can I blame?" class="draggable1" id="draggable1" />
-
-  <script>
-  const img = document.getElementById('draggable1');
-
-  img.addEventListener('mousedown', dragStart);
-  img.addEventListener('touchstart', dragStart, { passive: false });
-
-  function dragStart(e) {
-    e.preventDefault();
-    const isTouch = e.type === 'touchstart';
-    const clientX = isTouch ? e.touches[0].clientX : e.clientX;
-    const clientY = isTouch ? e.touches[0].clientY : e.clientY;
-
-    const shiftX = clientX - img.getBoundingClientRect().left;
-    const shiftY = clientY - img.getBoundingClientRect().top;
-
-    function moveAt(x, y) {
-      img.style.left = x - shiftX + 'px';
-      img.style.top = y - shiftY + 'px';
-    }
-
-    function onMouseMove(e) {
-      moveAt(e.clientX, e.clientY);
-    }
-
-    function onTouchMove(e) {
-      moveAt(e.touches[0].clientX, e.touches[0].clientY);
-    }
-
-    if (isTouch) {
-      document.addEventListener('touchmove', onTouchMove, { passive: false });
-      document.addEventListener('touchend', function touchEnd() {
-        document.removeEventListener('touchmove', onTouchMove);
-        document.removeEventListener('touchend', touchEnd);
-      });
-    } else {
-      document.addEventListener('mousemove', onMouseMove);
-      document.addEventListener('mouseup', function mouseUp() {
-        document.removeEventListener('mousemove', onMouseMove);
-        document.removeEventListener('mouseup', mouseUp);
-      });
-    }
-  }
-
-  img.ondragstart = function () {
-    return false;
-  };
-</script>
-  
-  <ol>
-    <li><a href="JT1.html">The Dialectics of Exclusion <img src="assets/eye.png" alt="eye"></a></li>
-    <li><a href="JT2.html">Phenomenology of Power <img src="assets/eye.png" alt="eye"></a></li>
-    <li><a href="JT3.html">The Banality of Degradation <img src="assets/eye.png" alt="eye"></a></li>
-  </ol>
-
-
 
   <footer>
     <span class="marquee">
       To engage with the Indian context afresh is to resist the inertia of established interpretations—a task that demands both moral courage and a radical rethinking of inherited ideas. In the spirit of Nietzsche, we must unshackle our understanding from conventional hierarchies of value, thereby opening a space where new meanings can emerge. Durkheim’s insights remind us that social facts, those peculiar entities of collective life, must be studied in their own right rather than merely as echoes of universal abstractions. It is only through this rigorous reexamination that we can hope to comprehend the complex tapestry of Indian society, whose vibrant plurality defies reduction to any singular doctrine. In this pursuit, our duty is not only to observe but also to interpret, lest we fall prey to the seductions of the familiar and the inert.
     </span>
   </footer>
+
+  <script>
+    const img = document.getElementById('draggable1');
+
+    img.addEventListener('mousedown', dragStart);
+    img.addEventListener('touchstart', dragStart, { passive: false });
+
+    function dragStart(e) {
+      e.preventDefault();
+      const isTouch = e.type === 'touchstart';
+      const clientX = isTouch ? e.touches[0].clientX : e.clientX;
+      const clientY = isTouch ? e.touches[0].clientY : e.clientY;
+
+      const shiftX = clientX - img.getBoundingClientRect().left;
+      const shiftY = clientY - img.getBoundingClientRect().top;
+
+      function moveAt(x, y) {
+        img.style.left = x - shiftX + 'px';
+        img.style.top = y - shiftY + 'px';
+      }
+
+      function onMouseMove(e) {
+        moveAt(e.clientX, e.clientY);
+      }
+
+      function onTouchMove(e) {
+        moveAt(e.touches[0].clientX, e.touches[0].clientY);
+      }
+
+      if (isTouch) {
+        document.addEventListener('touchmove', onTouchMove, { passive: false });
+        document.addEventListener('touchend', function touchEnd() {
+          document.removeEventListener('touchmove', onTouchMove);
+          document.removeEventListener('touchend', touchEnd);
+        });
+      } else {
+        document.addEventListener('mousemove', onMouseMove);
+        document.addEventListener('mouseup', function mouseUp() {
+          document.removeEventListener('mousemove', onMouseMove);
+          document.removeEventListener('mouseup', mouseUp);
+        });
+      }
+    }
+
+    img.ondragstart = function () {
+      return false;
+    };
+  </script>
 </body>
 </html>
