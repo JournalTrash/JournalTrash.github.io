@@ -20,6 +20,8 @@
             z-index: 10;
             background: none;
             line-height: 1;
+            padding: 20px;
+            background-color: pink;
         }
 
         .sticky-header a {
@@ -36,23 +38,25 @@
         /* Side menu */
         .side-menu {
             position: fixed;
-            top: 0;
+            top: 120px; /* Ensures the side menu is below the sticky header */
             left: 0;
             width: 200px;
             height: 100%;
-            background-color: #f4f4f4;
+            background-color: pink; /* Pink background */
             padding-top: 20px;
             box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            z-index: 5;
         }
 
         .side-menu a {
             display: block;
-            padding: 15px;
+            padding: 10px 15px;
             text-decoration: none;
             color: #28282B;
-            font-size: 20px;
-            text-transform: uppercase;
+            font-size: 40px; /* Reduced font size to 40px */
             font-weight: bold;
+            line-height: 1.2;
+            text-transform: none; /* Ensures text is in sentence case */
         }
 
         .side-menu a:hover {
@@ -66,24 +70,26 @@
         }
 
         .content h1 {
-            font-size: 40px;
+            font-size: 80px;
             font-weight: bold;
             margin-bottom: 20px;
         }
 
         .content p {
-            font-size: 18px;
+            font-size: 80px;
             margin-bottom: 20px;
         }
 
         .content footer {
-            font-size: 16px;
+            font-size: 80px;
             margin-top: 40px;
         }
 
         /* Footnotes */
         .footnote {
-            font-size: 14px;
+            font-family: "Times New Roman", serif;
+            font-size: 80px; /* Same as the rest of the body */
+            color: #28282B; /* Same color as body text */
             text-align: left;
             margin-top: 20px;
         }
@@ -109,7 +115,7 @@
             color: pink; /* Pink font */
             padding: 10px 20px;
             border-radius: 25px;
-            font-size: 14px;
+            font-size: 80px;
             white-space: nowrap;
         }
     </style>
