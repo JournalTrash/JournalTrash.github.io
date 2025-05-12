@@ -6,126 +6,92 @@
     <title>Research Paper Example</title>
     <style>
         body {
-            font-family: "Times New Roman", serif;
-            color: #28282B;
-            background-color: pink;
-            margin: 0;
-            padding: 0;
-            line-height: 1.2; /* Reduced line spacing for overall body */
-        }
+    font-family: "Times New Roman", serif;
+    color: #28282B;
+    background-color: pink;
+    margin: 0;
+    padding: 0;
+    line-height: 1.4;
+}
 
-        .sticky-header {
-            position: sticky;
-            top: 0;
-            z-index: 10;
-            background: none;
-            line-height: 1;
-            padding: 20px;
-            background-color: pink;
-            display: flex;
-            justify-content: space-between; /* Makes space between the two elements */
-            align-items: center;
-        }
+.sticky-header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: none;
+    line-height: 1;
+    padding: 20px;
+    background-color: pink;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
-        .sticky-header a {
-            display: block;
-            text-decoration: none;
-            color: #28282B;
-            font-size: 80px;
-            letter-spacing: -0.06em;
-            transform: scaleY(1.25);
-            margin: 0;
-            padding-left: 0;
-        }
+.sticky-header a {
+    display: block;
+    text-decoration: none;
+    color: #28282B;
+    font-size: 80px;
+    letter-spacing: -0.06em;
+    transform: scaleY(1.25);
+    margin: 0;
+    padding-left: 0;
+}
 
-        .sticky-header .home-link {
-            font-size: 40px;
-            color: #28282B;
-            text-decoration: none;
-            letter-spacing: -0.06em;
-            transform: scaleY(1.25);
-        }
+.sticky-header .home-link {
+    font-size: 40px;
+    color: #28282B;
+    text-decoration: none;
+    letter-spacing: -0.06em;
+    transform: scaleY(1.25);
+}
 
-        /* Side menu */
-        .side-menu {
-            position: fixed;
-            top: 120px; /* Ensures the side menu is below the sticky header */
-            left: 0;
-            width: 200px;
-            height: 100%;
-            background-color: pink; /* Pink background */
-            padding-top: 20px;
-            z-index: 5;
-        }
+/* Side menu */
+.side-menu {
+    position: fixed;
+    top: 120px;
+    left: 0;
+    width: 200px;
+    height: calc(100% - 120px);
+    background-color: pink;
+    padding-top: 20px;
+    z-index: 5;
+    overflow-y: auto;
+}
 
-        .side-menu a {
-            display: block;
-            padding: 10px 15px;
-            text-decoration: none;
-            color: #28282B;
-            letter-spacing: -0.06em;
-            transform: scaleY(1.25);
-            font-size: 30px; /* Reduced font size to 40px */
-            line-height: 1.2;
-            text-transform: none; /* Ensures text is in sentence case */
-        }
+.side-menu a {
+    display: block;
+    padding: 10px 15px;
+    text-decoration: none;
+    color: #28282B;
+    letter-spacing: -0.06em;
+    transform: scaleY(1.25);
+    font-size: 20px;
+    line-height: 1.4;
+    text-transform: none;
+}
 
-        .side-menu a:hover {
-            background-color: pink;
-            color: #39FF14; 
-        }
+.side-menu a:hover {
+    background-color: pink;
+    color: #39FF14;
+}
 
-        /* Main content */
-        .content {
-            margin-left: 220px;
-            padding: 40px;
-        }
+/* Main content */
+.content {
+    margin-left: 220px;
+    padding: 40px;
+}
 
-        .content h1, .content p {
-            font-size: 50px;
-            margin-bottom: 20px;
-            letter-spacing: -0.06em; /* Apply letter-spacing to paragraphs and headings */
-            transform: scaleY(1.25); /* Apply vertical scaling to paragraphs and headings */
-        }
+.content h1,
+.content p {
+    font-size: 30px;
+    margin-bottom: 20px;
+    letter-spacing: -0.06em;
+    transform: scaleY(1.25);
+    line-height: 1.5;
+}
 
-        .content footer {
-            font-size: 80px;
-            margin-top: 40px;
-        }
 
-        /* Footnotes */
-        .footnote {
-            font-family: "Times New Roman", serif;
-            font-size: 40px; /* Same as the rest of the body */
-            color: #28282B; /* Same color as body text */
-            text-align: left;
-            margin-top: 20px;
-        }
-
-        .footnote a {
-            text-decoration: none;
-            color: #28282B;
-        }
-
-        /* Footnote appearance on hover */
-        .footnote span {
-            position: relative;
-            display: inline-block;
-        }
-
-        .footnote span:hover::after {
-            content: attr(data-footnote);
-            position: absolute;
-            left: 50%;
-            top: 100%;
-            transform: translateX(-50%);
-            background-color: #28282B; /* Matt black background */
-            color: pink; /* Pink font */
-            padding: 10px 20px;
-            border-radius: 25px;
-            font-size: 80px;
-            white-space: nowrap;
-        }
     </style>
 </head>
 <body>
