@@ -45,7 +45,6 @@
     transform: scaleY(1.25);
 }
 
-/* Side menu */
 .side-menu {
     position: fixed;
     top: 120px;
@@ -75,39 +74,109 @@
     color: #39FF14;
 }
 
-/* Main content */
 .content {
-     padding-top: 160px
+    padding-top: 160px;
     margin-top: 120px;
     margin-left: 250px;
     padding: 40px;
     overflow: visible;
-    margin-right: 50px; 
+    margin-right: 50px;
 }
 
 .content h1 {
-  font-size: 30px;
-  letter-spacing: -0.06em;
-  line-height: 1.4;
-  transform: scaleY(1.25);
-  transform-origin: top;
-  margin-bottom: 60px; /* Increase to account for scaling */
-    margin-right: 50px; 
-     margin-left: 250px;
+    font-size: 30px;
+    letter-spacing: -0.06em;
+    line-height: 1.4;
+    transform: scaleY(1.25);
+    transform-origin: top;
+    margin-bottom: 60px;
+    margin-right: 50px;
+    margin-left: 250px;
 }
 
 .content p {
-  font-size: 30px;
-  letter-spacing: -0.06em;
-  line-height: 1.4;
-  transform: scaleY(1.25);
-  transform-origin: top;
-    margin-right: 50px; 
-     margin-left: 250px;
+    font-size: 30px;
+    letter-spacing: -0.06em;
+    line-height: 1.4;
+    transform: scaleY(1.25);
+    transform-origin: top;
+    margin-right: 50px;
+    margin-left: 250px;
 }
-        @media screen and (max-width: 768px) {
+
+/* Scattered images */
+.scatter-img {
+    float: right;
+    margin: 12px 0 12px 28px;
+    width: 110px;
+    height: auto;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 1px 8px rgba(0,0,0,0.14);
+    transition: box-shadow 0.2s, transform 0.2s;
+}
+.scatter-img.left {
+    float: left;
+    margin: 12px 28px 12px 0;
+}
+.scatter-img:hover {
+    box-shadow: 0 3px 20px rgba(0,0,0,0.25);
+    transform: scale(1.04);
+}
+
+/* Modal for expanded images */
+.img-modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0; top: 0; width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.72);
+    justify-content: center;
+    align-items: center;
+}
+.img-modal:target {
+    display: flex;
+}
+.img-modal-content {
+    position: relative;
+    background: #fff;
+    padding: 0;
+    border-radius: 14px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    max-width: 94vw;
+    max-height: 94vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.img-modal-content img {
+    max-width: 92vw;
+    max-height: 85vh;
+    border-radius: 12px;
+    background: #fff;
+}
+.img-modal-close {
+    position: absolute;
+    top: 0px; right: 12px;
+    font-size: 3rem;
+    color: #555;
+    text-decoration: none;
+    font-weight: bold;
+    z-index: 100;
+    background: rgba(255,255,255,0.7);
+    border-radius: 50%;
+    padding: 2px 16px 4px 16px;
+    line-height: 1;
+    transition: background 0.2s;
+}
+.img-modal-close:hover {
+    background: #ffb6c1;
+    color: #222;
+}
+
+@media screen and (max-width: 768px) {
     .side-menu {
-        display: none; /* Hide side menu */
+        display: none;
     }
 
     .content {
@@ -149,21 +218,25 @@
         padding: 10px;
         border-radius: 50%;
     }
+    .scatter-img, .scatter-img.left {
+        float: none !important;
+        display: block;
+        margin: 15px auto !important;
+        width: 70vw;
+        max-width: 98vw;
+    }
 }
 
-/* Default desktop: hide the arrow */
 .mobile-arrow {
     display: none;
 }
-
-
     </style>
 </head>
 <body>
 
 <header class="sticky-header">
     <a href="index.html">Journal. Trash</a>
-    <a href="home.html" class="home-link">//home</a> <!-- Added "//home" link on the right -->
+    <a href="home.html" class="home-link">//home</a>
 </header>
 
 <div class="side-menu">
@@ -174,20 +247,38 @@
 </div>
 
 <div class="content">
-   
-    <p><span style="font-size: 70px; letter-spacing: -0.06em; line-height: 1; transform: scaleY(1.25); display: inline-block;">The Dialectics of Exclusion: Daṇḍa as a Conduit from Alienation to Communal Recognition</span><br>
-        <br>
-    Abstract<br>This paper offers an analysis of the punitive experience of the individual who, having breached the social order, is subjected to daṇḍa within Indian society. In this investigation, punishment emerges not as a simple act of retribution, but as a profound encounter with the collective conscience—a moment when the transgressor is stripped of his anonymity and forced into the realm of judgment. From both a sociological and criminological standpoint, the study examines how the ritual of punishment functions as a social mechanism for maintaining collective norms and reestablishing social equilibrium. At its core, it's a confrontation that exposes the fragility of human freedom. Rather than reducing punishment to a mere administrative imposition, this inquiry portrays daṇḍa as an existential interruption, a severe yet necessary rite through which the criminal is invited to reassess his own being and his relation to the community he has unsettled. In this light, punishment becomes a space of reflection and potential renewal—a dangerous but inescapable call to reenter the realm of shared responsibility, echoing the urgent need to preserve the integrity of the public world. It considers daṇḍa not merely as a legal or administrative response to transgression but as a culturally entrenched process that exposes the offender to a dual experience of stigmatization and potential reintegration. The encounter with punishment is portrayed as a moment of sociological disruption—where an individual's routine identity is publicly interrogated and redefined—and as a criminological event that both deters deviance and facilitates a critical reassessment of personal conduct through the imposition of moral and legal sanctions. In this framework, daṇḍa is analyzed as a multifaceted social institution that mediates between the imperatives of public order and the possibilities for individual transformation, illuminating the intricate interplay between social control, labeling, and the reintegration of the transgressor into the community.
+
+<p>
+<span style="font-size: 70px; letter-spacing: -0.06em; line-height: 1; transform: scaleY(1.25); display: inline-block;">The Dialectics of Exclusion: Daṇḍa as a Conduit from Alienation to Communal Recognition</span><br>
 <br>
-        <br>
-    <span style="font-size: 50px; letter-spacing: -0.06em; line-height: 1; transform: scaleY(1.25); display: inline-block;">Key words</span>
-    <br>
-        
-    Indian Philosophy, Criminology, Sociology, Daṇḍa, Collective Consciousness, Daṇḍa
+Abstract
+<a href="#img1-modal"><img src="img1.jpg" alt="Ashwatthama illustration" class="scatter-img" /></a>
 <br>
-   <br>
-     <span style="font-size: 50px; letter-spacing: -0.06em; line-height: 1; transform: scaleY(1.25); display: inline-block;">Daṇḍa and the Architecture of Order: On Power, Law, and the Sacred in Indian Society</span>
-    <br>
+This paper offers an analysis of the punitive experience of the individual who, having breached the social order, is subjected to daṇḍa within Indian society. In this investigation, punishment emerges not as a simple act of retribution, but as a profound encounter with the collective conscience—a moment when the transgressor is stripped of his anonymity and forced into the realm of judgment.
+<a href="#img2-modal"><img src="img2.jpg" alt="Public parading" class="scatter-img left" /></a>
+From both a sociological and criminological standpoint, the study examines how the ritual of punishment functions as a social mechanism for maintaining collective norms and reestablishing social equilibrium. At its core, it's a confrontation that exposes the fragility of human freedom. Rather than reducing punishment to a mere administrative imposition, this inquiry portrays daṇḍa as an existential interruption, a severe yet necessary rite through which the criminal is invited to reassess his own being and his relation to the community he has unsettled.
+In this light, punishment becomes a space of reflection and potential renewal—a dangerous but inescapable call to reenter the realm of shared responsibility, echoing the urgent need to preserve the integrity of the public world.
+<a href="#img3-modal"><img src="img3.jpg" alt="Ritual of punishment" class="scatter-img" /></a>
+It considers daṇḍa not merely as a legal or administrative response to transgression but as a culturally entrenched process that exposes the offender to a dual experience of stigmatization and potential reintegration. The encounter with punishment is portrayed as a moment of sociological disruption—where an individual's routine identity is publicly interrogated and redefined—and as a criminological event that both deters deviance and facilitates a critical reassessment of personal conduct through the imposition of moral and legal sanctions. In this framework, daṇḍa is analyzed as a multifaceted social institution that mediates between the imperatives of public order and the possibilities for individual transformation, illuminating the intricate interplay between social control, labeling, and the reintegration of the transgressor into the community.
+<br>
+<br>
+<span style="font-size: 50px; letter-spacing: -0.06em; line-height: 1; transform: scaleY(1.25); display: inline-block;">Key words</span>
+<br>
+Indian Philosophy, Criminology, Sociology, Daṇḍa, Collective Consciousness, Daṇḍa
+<br>
+<br>
+<span style="font-size: 50px; letter-spacing: -0.06em; line-height: 1; transform: scaleY(1.25); display: inline-block;">Daṇḍa and the Architecture of Order: On Power, Law, and the Sacred in Indian Society</span>
+<br>
+<br>
+In contemplating the notion of daṇḍa, one is immediately drawn into a space where punishment transcends mere retribution, evolving into a profound articulation of order and responsibility—a thematic excursion not altogether dissimilar to the meditations on human freedom and the nature of authority that so captivated Hannah Arendt (1958)I. Daṇḍa1, in its classical Indian conception, is not simply the administration of penalty; it is an enactment of a moral force that seeks to reestablish the harmony of the community, a social cosmos disturbed by transgression (Olivelle, 2004)ii.
+<br>
+<!-- ... ALL YOUR ORIGINAL CONTENT CONTINUES HERE UNCHANGED ... -->
+<!-- You can insert more scattered images in the same way anywhere in your text: -->
+<!-- <a href="#imgX-modal"><img src="imgX.jpg" alt="Description" class="scatter-img [left]" /></a> -->
+<!-- and add a modal for it at the end. -->
+</p>
+
+<br>
         <br>
     In contemplating the notion of daṇḍa, one is immediately drawn into a space where punishment transcends mere retribution, evolving into a profound articulation of order and responsibility—a thematic excursion not altogether dissimilar to the meditations on human freedom and the nature of authority that so captivated Hannah Arendt (1958)I. Daṇḍa1, in its classical Indian conception, is not simply the administration of penalty; it is an enactment of a moral force that seeks to reestablish the harmony of the community, a social cosmos disturbed by transgression (Olivelle, 2004)ii. <br>
 <br>
@@ -267,6 +358,33 @@ Ultimately, the punitive experience embodied by daṇḍa serves not only as a m
 5.Durkheim, E. (1984). The division of labor in society (W. D. Halls, Trans.). Free Press. (Original work published 1893) <br>
 
 6.Durkheim, E. (1995). The elementary forms of religious life (K. E. Fields, Trans.). Free Press. (Original work published 1912)</p>
+
+</div>
+
+
+<!-- MODALS FOR EXPANDABLE IMAGES -->
+<div id="img1-modal" class="img-modal">
+  <div class="img-modal-content">
+    <a href="#" class="img-modal-close" title="Close">&times;</a>
+    <img src="img1.jpg" alt="Ashwatthama illustration expanded"/>
+    <div style="color:#222;text-align:center;font-size:1.1em;margin:14px 0 0 0;">Ashwatthama, cursed to wander—artist's depiction</div>
+  </div>
+</div>
+<div id="img2-modal" class="img-modal">
+  <div class="img-modal-content">
+    <a href="#" class="img-modal-close" title="Close">&times;</a>
+    <img src="img2.jpg" alt="Public parading expanded"/>
+    <div style="color:#222;text-align:center;font-size:1.1em;margin:14px 0 0 0;">Public parading as communal ritual</div>
+  </div>
+</div>
+<div id="img3-modal" class="img-modal">
+  <div class="img-modal-content">
+    <a href="#" class="img-modal-close" title="Close">&times;</a>
+    <img src="img3.jpg" alt="Ritual of punishment expanded"/>
+    <div style="color:#222;text-align:center;font-size:1.1em;margin:14px 0 0 0;">Symbolic ritual of punishment</div>
+  </div>
+</div>
+<!-- Add more modal blocks as needed for additional images -->
 
 </div>
 
