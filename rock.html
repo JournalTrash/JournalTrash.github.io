@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>3D Rock Viewer</title>
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+  <style>
+    body { display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background:#202020; }
+    model-viewer { width: 600px; height: 400px; }
+  </style>
+</head>
+<body>
+  <model-viewer src="assets/rock.glb" alt="3D rock"
+    auto-rotate camera-controls
+    shadow-intensity="1">
+  </model-viewer>
+</body>
+</html>
